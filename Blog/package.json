@@ -1,0 +1,15 @@
+{
+  "name": "Blog",
+  "version": "0.0.0",
+  "description": "Blog",
+  "main": "app.js",
+  "author": {
+    "name": "James Earle",
+    "email": ""
+  },
+  "dependencies": {
+    "express": "3.4.4",
+    "jade": "*",
+    "stylus": "*"
+  }
+}
