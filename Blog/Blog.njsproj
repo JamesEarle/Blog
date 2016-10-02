@@ -34,7 +34,10 @@
     <Compile Include="routes\index.js" />
     <Compile Include="routes\user.js" />
     <Content Include="package.json" />
-    <Content Include="public\stylesheets\style.css" />
+    <Content Include="public\css\style.css" />
+    <Content Include="public\img\icons\github.png" />
+    <Content Include="public\img\icons\linkedin.png" />
+    <Content Include="public\img\icons\twitter.png" />
     <Content Include="README.md" />
     <Content Include="views\includes\nav.jade" />
     <Content Include="views\index.jade" />
@@ -42,9 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\" />
-    <Folder Include="public\images\" />
+    <Folder Include="public\css\" />
+    <Folder Include="public\img\" />
+    <Folder Include="public\img\icons\" />
     <Folder Include="public\javascripts\" />
-    <Folder Include="public\stylesheets\" />
+    <Folder Include="public\js\" />
     <Folder Include="routes\" />
     <Folder Include="views\" />
     <Folder Include="views\includes\" />
