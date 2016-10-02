@@ -3,7 +3,6 @@
  * GET home page.
  */
 
-var test = "# DJKhaled How much water did you drink today? Need some inspiration? Let DJ Khaled give it to you !This Google Chrome extension provides a fresh DJ Khaled background every time you open a new tab, along with somedeeply personal, inspiring quotes to help get you through your day.Bless up, we the best. *[Download Here](https://chrome.google.com/webstore/detail/dj-khaled-tabs/ohcphfnhjdpdfggahdmpmadnoaoflmoa)* # **2,000** Active Users in Chrome, Major Key :key: :pray:";
 exports.index = function (req, res) {
     //console.log(req.connection);
     req.connection.query("SELECT * FROM posts", function (err, rows, fields) {
@@ -24,3 +23,24 @@ exports.index = function (req, res) {
         });
     });
 };
+
+exports.login = function (req, res) { 
+    
+}
+
+exports.register = function (req, res) {
+
+}
+
+exports.posts = function (req, res) {
+    req.connection.query("SELECT * FROM Posts P WHERE P.pid=" + req.params.pid, function (err, rows, fields) {
+        if (err) throw err;
+        
+        if (rows.length == 0) {
+            res.render('notfound');
+        } else {
+            res.render('posts', {row: rows[0]});
+        }
+
+    });
+}

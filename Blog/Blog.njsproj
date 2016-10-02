@@ -32,7 +32,6 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="routes\index.js" />
-    <Compile Include="routes\user.js" />
     <Content Include="package.json" />
     <Content Include="public\css\style.css" />
     <Content Include="public\img\icons\github.png" />
@@ -42,6 +41,9 @@
     <Content Include="views\includes\nav.jade" />
     <Content Include="views\index.jade" />
     <Content Include="views\layout.jade" />
+    <Content Include="views\login.jade" />
+    <Content Include="views\posts.jade" />
+    <Content Include="views\register.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\" />
