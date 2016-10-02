@@ -6,4 +6,11 @@ html
     link(rel='stylesheet', href='/css/bootstrap.css')
   body
     .container
-        block content
+        .box
+            include ./includes/nav.jade
+            .center-header
+                hr
+                h1 JAMES IRL
+                h4 IN REAL LIFE
+                hr
+            block content

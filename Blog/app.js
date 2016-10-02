@@ -44,11 +44,15 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
+// GET Routes
 app.get('/', routes.index);
-app.get('/login', routes.login);
-app.get('/register', routes.register);
-
+app.get('/login', routes.g_login);
+app.get('/register', routes.g_register);
 app.get('/posts/:pid', routes.posts);
+
+// POST Routes
+app.post('/login', routes.p_login);
+app.post('/register', routes.p_register);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));

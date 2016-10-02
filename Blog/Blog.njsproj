@@ -31,13 +31,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="public\js\bootstrap.js" />
+    <Compile Include="public\js\bootstrap.min.js" />
+    <Compile Include="public\js\npm.js" />
     <Compile Include="routes\index.js" />
     <Content Include="package.json" />
+    <Content Include="public\css\bootstrap-theme.css" />
+    <Content Include="public\css\bootstrap-theme.css.map" />
+    <Content Include="public\css\bootstrap-theme.min.css" />
+    <Content Include="public\css\bootstrap-theme.min.css.map" />
+    <Content Include="public\css\bootstrap.css" />
+    <Content Include="public\css\bootstrap.css.map" />
+    <Content Include="public\css\bootstrap.min.css" />
+    <Content Include="public\css\bootstrap.min.css.map" />
     <Content Include="public\css\style.css" />
+    <Content Include="public\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="public\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="public\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="public\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="public\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="public\img\icons\github.png" />
     <Content Include="public\img\icons\linkedin.png" />
     <Content Include="public\img\icons\twitter.png" />
     <Content Include="README.md" />
+    <Content Include="views\errors\notfound.jade" />
+    <Content Include="views\errors\servererror.jade" />
     <Content Include="views\includes\nav.jade" />
     <Content Include="views\index.jade" />
     <Content Include="views\layout.jade" />
@@ -48,6 +66,7 @@
   <ItemGroup>
     <Folder Include="public\" />
     <Folder Include="public\css\" />
+    <Folder Include="public\fonts\" />
     <Folder Include="public\img\" />
     <Folder Include="public\img\icons\" />
     <Folder Include="public\javascripts\" />
@@ -55,6 +74,7 @@
     <Folder Include="routes\" />
     <Folder Include="views\" />
     <Folder Include="views\includes\" />
+    <Folder Include="views\errors\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

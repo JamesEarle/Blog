@@ -1,7 +1,4 @@
-﻿
-/*
- * GET home page.
- */
+﻿/* GET */
 
 exports.index = function (req, res) {
     //console.log(req.connection);
@@ -24,14 +21,6 @@ exports.index = function (req, res) {
     });
 };
 
-exports.login = function (req, res) { 
-    
-}
-
-exports.register = function (req, res) {
-
-}
-
 exports.posts = function (req, res) {
     req.connection.query("SELECT * FROM Posts P WHERE P.pid=" + req.params.pid, function (err, rows, fields) {
         if (err) throw err;
@@ -43,4 +32,21 @@ exports.posts = function (req, res) {
         }
 
     });
+}
+
+exports.g_login = function (req, res) {
+    res.render('login');
+}
+
+exports.g_register = function (req, res) {
+    res.render('register');
+}
+
+/* POST */
+exports.p_login = function (req, res) {
+    res.render('login');
+}
+
+exports.p_register = function (req, res) {
+    res.render('register');
 }

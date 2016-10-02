@@ -1,17 +1,10 @@
 ﻿extends layout
 
 block content
-    .box
-        include ./includes/nav.jade
-        .center-header
-            hr
-            h1 JAMES IRL
-            h4 IN REAL LIFE
-            hr
-        .blogs.box
-            h3 Recent Posts
-                ul
-                    each r, i in rows
-                        li
-                            a(href="/posts/#{r.pid}")
-                                h3= r.title
+    .blogs.box
+        h3 Recent Posts
+            ul
+                each r, i in rows
+                    li
+                        a(href="/posts/#{r.pid}")
+                            h3= r.title
