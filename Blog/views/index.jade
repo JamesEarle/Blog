@@ -5,5 +5,16 @@ block content
         include ./includes/nav.jade
         .center-header
             hr
-            h1 IT'S JAMES IRL
+            h1 JAMES IRL
+            h4 IN REAL LIFE
             hr
+        .blogs.container
+            h2 Recent Posts
+                ul
+                    each r, i in rows
+                        li
+                            h2= r.title
+                            p Preview Text <br>
+                                span #{r.body_preview}
+                            p Rendered Markdown <br>
+                                span!= html[i]    

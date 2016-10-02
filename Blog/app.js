@@ -3,8 +3,29 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var marked = require('marked');
+
+// MySQL DB connection and setup.
+var mysql = require("mysql");
+
+var connection = mysql.createConnection({
+    host : "localhost",
+    user : "root",
+    password : "", //secret
+    database : "blog",
+    port : "3306"
+});
+
+connection.connect();
 
 var app = express();
+
+// Make the DB and Markdown parser visible to the router
+app.use(function (req, res, next) {
+    req.connection = connection;
+    req.marked = marked;
+    next();
+});
 
 // all environments
 app.set('port', process.env.PORT || 3000);
