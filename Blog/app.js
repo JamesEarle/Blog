@@ -2,7 +2,9 @@
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
-var marked = require('marked');
+var md = require('markdown-it')();
+
+//console.log(md.render("# Here is a test! \n ~~strikethrough~~ and **bold**"));
 
 // MySQL DB connection and setup.
 var mysql = require("mysql");
@@ -22,7 +24,7 @@ var app = express();
 // Make the DB and Markdown parser visible to the router
 app.use(function (req, res, next) {
     req.connection = connection;
-    req.marked = marked;
+    req.md = md;
     next();
 });
 
@@ -48,11 +50,13 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/login', routes.g_login);
 app.get('/register', routes.g_register);
+app.get('/create', routes.g_create);
 app.get('/posts/:pid', routes.posts);
 
 // POST Routes
 app.post('/login', routes.p_login);
 app.post('/register', routes.p_register);
+app.post('/create', routes.p_create);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));

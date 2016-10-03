@@ -10,7 +10,7 @@
   "dependencies": {
     "express": "3.4.4",
     "jade": "*",
-    "marked": "^0.3.6",
+    "markdown-it": "^8.0.0",
     "mysql": "^2.11.1",
     "stylus": "*"
   }
