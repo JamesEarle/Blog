@@ -1,0 +1,18 @@
+﻿extends ../layout
+
+block content
+    .form.create-post
+        form(action="/create", method="POST", enctype="multipart/form-data")
+            .form-group
+                label(for="title") Title
+                input(type="text", name="username", placeholder="Title").form-control#title
+            .form-group
+                label(for="preview") Body Preview
+                input(type="textarea", name="preview", placeholder="Plain text here.").form-control#preview
+            .form-group
+                label(for="thumbnail") Thumbnail <span class="text-muted">(Optional)</span>
+                input(type="file", name="thumbnail", placeholder="Choose an image" accept="image/*").form-control
+            .form-group
+                label(for="markdown") Body Markdown
+                textarea(rows="25", name="markdown", placeholder="Full markdown here.").form-control#markdown
+            button(type="submit").btn.btn-default Submit
