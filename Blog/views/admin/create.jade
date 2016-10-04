@@ -5,13 +5,20 @@ block content
         form(action="/create", method="POST", enctype="multipart/form-data")
             .form-group
                 label(for="title") Title
-                input(type="text", name="username", placeholder="Title").form-control#title
+                input(type="text", name="title", placeholder="Title").form-control#title
+            .form-group
+                label(for="thumbnail") Thumbnail 
+                    span.text-muted (Optional)
+                input(type="file", name="thumbnail", placeholder="Choose an image" accept="image/*").form-control#thumbnail
+            .form-group
+                label(for="tags") Tags
+                input(type="text", name="tags", placeholder="Semicolon separate list").form-control#tags
+            .form-group
+                label(for="topic") Topic
+                input(type="text", name="topic", placeholder="Single word").form-control#tags
             .form-group
                 label(for="preview") Body Preview
-                input(type="textarea", name="preview", placeholder="Plain text here.").form-control#preview
-            .form-group
-                label(for="thumbnail") Thumbnail <span class="text-muted">(Optional)</span>
-                input(type="file", name="thumbnail", placeholder="Choose an image" accept="image/*").form-control
+                input(type="text", name="preview", placeholder="Plain text here.").form-control#preview
             .form-group
                 label(for="markdown") Body Markdown
                 textarea(rows="25", name="markdown", placeholder="Full markdown here.").form-control#markdown

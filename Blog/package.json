@@ -1,17 +1,18 @@
 {
-  "name": "Blog",
-  "version": "0.0.0",
-  "description": "Blog",
-  "main": "app.js",
-  "author": {
-    "name": "James Earle",
-    "email": ""
-  },
-  "dependencies": {
-    "express": "3.4.4",
-    "jade": "*",
-    "markdown-it": "^8.0.0",
-    "mysql": "^2.11.1",
-    "stylus": "*"
-  }
+    "name": "Blog",
+    "version": "0.0.0",
+    "description": "Blog",
+    "main": "app.js",
+    "author": {
+        "name": "James Earle",
+        "email": ""
+    },
+    "dependencies": {
+        "express": "3.4.4",
+        "jade": "*",
+        "markdown-it": "^8.0.0",
+        "mysql": "^2.11.1",
+        "body-parser": "1.15.2",
+        "stylus": "0.54.5"
+    }
 }
