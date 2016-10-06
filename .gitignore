@@ -1,0 +1,3 @@
+# Ignore the entire node_modules/ directory
+
+Blog/node_modules/
