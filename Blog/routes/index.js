@@ -59,6 +59,16 @@ exports.p_create = function(req, res) {
 
     query += args.join("\', \'") + ")";
 
+    req.fs.readFile(req.files.thumbnail.path, function(err, data) {
+        if (err) throw err;
+        var newPath = __dirname + "/../public/uploads/" + req.files.thumbnail.name;
+
+        req.fs.writeFile(newPath, data, function(err) {
+            if (err) throw err;
+            console.log("just great");
+        });
+    });
+    
     req.connection.query(query, function(err, rows, fields) {
         if (err) throw err;
         res.redirect('/');

@@ -4,6 +4,7 @@ var http = require('http');
 var path = require('path');
 var body = require('body-parser');
 var md = require('markdown-it')();
+var fs = require('fs');
 
 //console.log(md.render("# Here is a test! \n ~~strikethrough~~ and **bold**"));
 
@@ -22,18 +23,14 @@ connection.connect();
 
 var app = express();
 
+// Allow requests to parse request body info
 app.use(express.bodyParser());
-
-// app.use(body.urlencoded({
-//     extended: true
-// }));
-
-// app.use(body.json());
 
 // Make the DB and Markdown parser visible to the router
 app.use(function(req, res, next) {
     req.connection = connection;
     req.md = md;
+    req.fs = fs;
     next();
 });
 
