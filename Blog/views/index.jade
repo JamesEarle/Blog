@@ -6,7 +6,6 @@ block content
         h3 Recent Posts
             ul
                 each r, i in rows
-                    // can do p(class="tag #{r.tag}") in the future
                     // consider a two column table of blog posts too?
                     case r.topic
                         when "azure"
