@@ -8,7 +8,13 @@ block content
                 each r, i in rows
                     // can do p(class="tag #{r.tag}") in the future
                     // consider a two column table of blog posts too?
-                    p.tag.chrome
+                    case r.topic
+                        when "azure"
+                            p.tag.azure
+                        when "code"
+                            p.tag.visual-studio
+                        default
+                            p.tag.default
                     li
                         a(href="/posts/#{r.pid}")
                             span #{r.title}

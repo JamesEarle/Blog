@@ -41,7 +41,12 @@ li {
 }
 
 .visual-studio {
-	background-color: #68712A; 
+	background-color: #7a4d87;
+	/*background-color: #68A12A; */
+}
+
+.default {
+	background-color: #666666;
 }
 
 .icon {
