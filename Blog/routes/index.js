@@ -61,25 +61,40 @@ exports.p_create = function(req, res) {
     var query = "INSERT INTO Posts (title, thumbnail, tags, topic, body_preview, body_markdown) VALUES (";
 
     var args = [
-        "\'" + req.body.title,
+        req.body.title,
         req.files.thumbnail.name,
         req.body.tags,
         req.body.topic,
         req.body.preview,
-        req.body.markdown + "\'"
+        req.body.markdown
     ];
+
+
+    // Sanitize your inputs you monster
+    for(var i=0;i<args.length;i++) {
+        args[i] = args[i].replace("'", "\\'");
+    }
+
+    // Append apostrophes to beginning and end because
+    // args.join use below doesn't do this
+    args[0] = "'" + args[0]; 
+    args[args.length-1] = args[args.length-1] + "\'";
 
     query += args.join("\', \'") + ")";
 
-    req.fs.readFile(req.files.thumbnail.path, function(err, data) {
-        if (err) throw err;
-        var newPath = __dirname + "/../public/uploads/" + req.files.thumbnail.name;
-
-        req.fs.writeFile(newPath, data, function(err) {
+    if(req.files.thumbnail.name !== "") {
+        req.fs.readFile(req.files.thumbnail.path, function(err, data) {
             if (err) throw err;
-            console.log("just great");
+            var newPath = __dirname + "/../public/uploads/" + req.files.thumbnail.name;
+
+            req.fs.writeFile(newPath, data, function(err) {
+                if (err) throw err;
+                console.log("just great");
+            });
         });
-    });
+    } 
+    
+    
     
     req.connection.query(query, function(err, rows, fields) {
         if (err) throw err;
