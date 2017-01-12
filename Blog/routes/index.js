@@ -93,8 +93,6 @@ exports.p_create = function(req, res) {
         });
     } 
     
-    
-    
     req.connection.query(query, function(err, rows, fields) {
         if (err) throw err;
         res.redirect('/');
