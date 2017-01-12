@@ -69,16 +69,15 @@ exports.p_create = function(req, res) {
         req.body.markdown
     ];
 
-
     // Sanitize your inputs you monster
     for(var i=0;i<args.length;i++) {
         args[i] = args[i].replace("'", "\\'");
     }
 
     // Append apostrophes to beginning and end because
-    // args.join use below doesn't do this
+    // args.join below doesn't do this
     args[0] = "'" + args[0]; 
-    args[args.length-1] = args[args.length-1] + "\'";
+    args[args.length-1] = args[args.length-1] + "'";
 
     query += args.join("\', \'") + ")";
 

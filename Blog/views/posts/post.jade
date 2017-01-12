@@ -5,7 +5,8 @@ block content
         h1 Here is post info
         ul
             li= row.title
-            li= row.thumbnail
+            unless row.thumbnail == ""
+                li= row.thumbnail
             li= row.tags
             li= row.topic
             li= row.body_preview
