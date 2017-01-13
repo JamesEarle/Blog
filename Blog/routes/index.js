@@ -17,6 +17,7 @@ exports.posts = function(req, res) {
         if (rows.length == 0) {
             res.render('errors/notfound');
         } else {
+            rows[0].body_markdown = req.md.render(rows[0].body_markdown);
             res.render('posts/post', { row: rows[0] });
         }
 

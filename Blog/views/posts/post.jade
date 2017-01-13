@@ -10,5 +10,7 @@ block content
             li= row.tags
             li= row.topic
             li= row.body_preview
-            li= row.body_markdown
+            
+            //- Escape incoming HTML
+            li!= row.body_markdown
 

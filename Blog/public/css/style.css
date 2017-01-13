@@ -24,6 +24,10 @@ li {
 	margin: 15px 0;
 }
 
+ul {
+	list-style-type: none;
+}
+
 .tag {
 	height: 20px;
 	width: 15px;
@@ -114,10 +118,6 @@ li {
 	width: 80%;
 }
 
-.blogs ul {
-	list-style-type: none;
-	/*word-wrap: break-word;*/
-}
 
 ul.navbar > li {
 	display: inline;
