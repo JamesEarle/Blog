@@ -1,23 +1,11 @@
 ﻿/* GET */
 
 exports.index = function(req, res) {
-    req.connection.query("SELECT P.pid, P.title, P.tags, P.topic FROM Posts P", function(err, rows, fields) {
+    req.connection.query("SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P", function(err, rows, fields) {
         if (err) throw err;
-
-        var tagsAndTopic = [];
-
-        for(var i=0;i<rows.length;i++) {
-            tagsAndTopic.push({
-                tags: rows[i].tags,
-                topic: rows[i].topic
-            });
-        }
-
-        // console.log(tagsAndTopic);
 
         res.render('index', {
             rows: rows,
-            tagsAndTopic: tagsAndTopic
         });
     });
 };

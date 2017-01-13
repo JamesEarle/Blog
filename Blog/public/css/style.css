@@ -32,15 +32,15 @@ li {
 }
 
 /* Will create a series of eligible tags and color mappings */
-.chrome {
-	background-color: #FF7474;
-}
-
 .azure {
 	background-color: #0078D7;
 }
 
-.visual-studio {
+.chrome {
+	background-color: #FF7474;
+}
+
+.dotnet {
 	background-color: #7a4d87;
 	/*background-color: #68A12A; */
 }
@@ -95,10 +95,6 @@ li {
 	padding: 0;
 }
 
-ul.navbar > li {
-	display: inline;
-	margin: 0 5px 0 5px;
-}
 
 .center-header {
 	width: 100%;
@@ -121,4 +117,14 @@ ul.navbar > li {
 .blogs ul {
 	list-style-type: none;
 	/*word-wrap: break-word;*/
+}
+
+ul.navbar > li {
+	display: inline;
+	margin: 0 5px 0 5px;
+}
+
+p.preview {
+	font-size: 0.75em;
+	margin: 5px 0 0 50px;
 }

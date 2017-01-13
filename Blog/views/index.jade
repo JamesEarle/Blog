@@ -12,10 +12,11 @@ block content
                             p.tag.azure
                         when "chrome"
                             p.tag.chrome
-                        when "code"
-                            p.tag.visual-studio
+                        when "dotnet"
+                            p.tag.dotnet
                         default
                             p.tag.default
                     li
                         a(href="/posts/#{r.pid}")
                             span #{r.title}
+                        p.preview #{r.body_preview}
