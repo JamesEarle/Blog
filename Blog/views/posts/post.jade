@@ -1,7 +1,20 @@
 ﻿extends ../layout
 
 block content
+    include ../includes/header.jade
     .box
+        a(href="/") &raquo; Home
+        p!= row.body_markdown
+        //case row.topic
+            when "azure"
+                p.tag.azure
+            when "chrome"
+                p.tag.chrome
+            when "dotnet"
+                p.tag.dotnet
+            default
+                p.tag.default
+    //
         h1 Here is post info
         ul
             li= row.title
