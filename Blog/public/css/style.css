@@ -64,6 +64,17 @@ ul {
 	height: 32px;
 }
 
+.filter {
+	/*padding: 20px;*/
+	text-decoration: none;
+	color: white;
+}
+
+.filter:hover {
+	text-decoration: none;
+	color: white;
+}
+
 .box {
 	width: 90%;
 	margin-left: auto;

@@ -2,7 +2,7 @@
 
 block content
     .form.create-post
-        form(action="/create", method="POST", enctype="multipart/form-data")
+        form(action="/create", method="POST", enctype="multipart/form-data")#create
             .form-group
                 label(for="title") Title
                 input(type="text", name="title", placeholder="Title").form-control#title
@@ -15,7 +15,11 @@ block content
                 input(type="text", name="tags", placeholder="Semicolon separate list").form-control#tags.no-space
             .form-group
                 label(for="topic") Topic
-                input(type="text", name="topic", placeholder="Single word").form-control#topic.no-space
+                select(name="topic").form-control#topic.no-space
+                    option(value="default") Default
+                    option(value="azure") Azure
+                    option(value="chrome") Chrome
+                    option(value="dotnet") .NET
             .form-group
                 label(for="preview") Body Preview
                 input(type="text", name="preview", placeholder="Plain text here." maxlength="140").form-control#preview
