@@ -135,11 +135,23 @@ ul {
 	width: 80%;
 }
 
-
-ul.navbar > li {
+ul.navbar > li,
+ul.topics > li {
 	display: inline;
 	margin: 0 5px 0 5px;
 }
+
+ul.topics li > span {
+	padding: 12px;
+	border-radius: 25px;
+}
+
+.topics {
+	width: 100%;
+	padding: 0px;
+}
+
+
 
 p.preview {
 	font-size: 0.75em;

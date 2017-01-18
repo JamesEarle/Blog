@@ -3,15 +3,20 @@
 block content
     include ./includes/header.jade
     .blogs.box
-        h4
-            span.azure 
-                a(href="#").filter Azure
-            span.chrome
-                a(href="#").filter Chrome
-            span.dotnet
-                a(href="#").filter .NET
-            span.default
-                a(href="#").filter Default
+        h4.center-header
+            ul.topics
+                li
+                    span.azure 
+                        a(href="#").filter Azure
+                li
+                    span.chrome
+                        a(href="#").filter Chrome
+                li
+                    span.dotnet
+                        a(href="#").filter .NET
+                li
+                    span.default
+                        a(href="#").filter Default
         h3 Recent Posts
             ul
                 each r, i in rows
