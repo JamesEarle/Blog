@@ -5,18 +5,29 @@ block content
     .blogs.box
         h4.center-header
             ul.topics
+                //- Doesn't work right because classes and the actual HTML
+                //- content don't always match (dotnet -> .NET, azure -> Azure)
+                //- mixin filter(topic)
+                //-     li
+                //-         span(class="#{topic}")
+                //-             a(href="/#{topic}").filter #{topic}
+                //- +filter("azure")
+                //- +filter("azure")
                 li
                     span.azure 
-                        a(href="#").filter Azure
+                        a(href="/azure").filter Azure
                 li
                     span.chrome
-                        a(href="#").filter Chrome
+                        a(href="/chrome").filter Chrome
                 li
                     span.dotnet
-                        a(href="#").filter .NET
+                        a(href="/dotnet").filter .NET
                 li
                     span.default
-                        a(href="#").filter Default
+                        a(href="/default").filter Default
+                li
+                    span.default
+                        a(href="/").filter No Filter
         h3 Recent Posts
             ul
                 each r, i in rows

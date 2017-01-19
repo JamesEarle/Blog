@@ -10,6 +10,17 @@ exports.index = function(req, res) {
     });
 };
 
+exports.index_filter = function(req, res) {
+    req.connection.query("SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic = \'" + req.params.filter + "\'", function (err, rows, fields) {
+        if (err) throw err;
+
+        res.render('index', {
+            rows: rows,
+            length: rows.length
+        });
+    });
+}
+
 exports.posts = function(req, res) {
     req.connection.query("SELECT * FROM Posts P WHERE P.pid=" + req.params.pid, function(err, rows, fields) {
         if (err) throw err;
