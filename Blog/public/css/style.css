@@ -141,7 +141,7 @@ ul.topics > li {
 	margin: 0 5px 0 5px;
 }
 
-ul.topics li > span {
+ul.topics li span {
 	padding: 12px;
 	border-radius: 25px;
 }
