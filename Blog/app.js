@@ -54,12 +54,16 @@ if ('development' == app.get('env')) {
 
 // GET Routes
 app.get('/', routes.index);
-app.get('/:filter', routes.index_filter);
+app.get('/filter/:filter', routes.index_filter);
 app.get('/login', routes.g_login);
 app.get('/register', routes.g_register);
+app.get('/posts/', routes.index);
+
+// CRUD
 app.get('/create', routes.g_create);
 app.get('/posts/:pid', routes.posts);
-app.get('/posts/', routes.index);
+// app.get('/posts/edit/:pid', routes.edit);
+app.get('/delete/:pid', routes.delete);
 
 // POST Routes
 app.post('/login', routes.p_login);

@@ -56,6 +56,15 @@ exports.p_register = function(req, res) {
     res.render('auth/register');
 }
 
+exports.delete = function(req, res) {
+    var query = "DELETE FROM Posts WHERE pid=" + req.params.pid; //delete from ....
+
+    req.connection.query(query, function(err, rows, fields) {
+        if (err) throw err;
+        res.redirect('/');
+    });
+}
+
 exports.p_create = function(req, res) {
 
     var query = "INSERT INTO Posts (title, thumbnail, tags, topic, body_preview, body_markdown) VALUES (";
