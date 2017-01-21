@@ -27,11 +27,12 @@ exports.posts = function(req, res) {
 
         if (rows.length == 0) {
             res.render('errors/notfound');
-        } else {
+        } else if (rows.length == 1) {
             rows[0].body_markdown = req.md.render(rows[0].body_markdown);
             res.render('posts/post', { row: rows[0] });
+        } else {
+            res.render('errors/servererror');
         }
-
     });
 }
 
@@ -47,7 +48,55 @@ exports.g_create = function(req, res) {
     res.render('admin/create');
 }
 
+exports.g_edit = function(req, res) {
+    var query = "SELECT * FROM Posts P WHERE P.pid=" + req.params.pid;
+
+    req.connection.query(query, function(err, rows, fields) {
+        if (err) throw err;
+
+        if(rows.length == 0) {
+            res.render('errors/notfound');
+        } else if (rows.length == 1) {
+            res.render('admin/edit', { row: rows[0] });
+        } else {
+            res.render('errors/servererror');
+        }
+    });
+}
+
 /* POST */
+exports.p_edit = function(req, res) {
+    var query = "UPDATE Posts SET";
+
+    // Leading spaces for formatting
+    var args = [
+        " title=\'" + req.body.title + "\',",
+        " thumbnail=\'" + req.files.thumbnail.name + "\',",
+        " tags=\'" + req.body.tags + "\',",
+        " topic=\'" + req.body.topic + "\',",
+        " body_preview=\'" + req.body.preview + "\',",
+        " body_markdown=\'" + req.body.markdown + "\'"
+    ];
+
+    // Sanitize your inputs you monster
+    for(var i=0;i<args.length;i++) {
+        args[i] = args[i].replace("'", "\\'");
+    }
+
+    for(var i=0;i<args.length;i++) {
+        query += args[i];
+    }
+
+    query += " WHERE pid=" + req.params.pid;
+
+    req.connection.query(query, function(err, rows, fields) {
+        if (err) throw err;
+
+        res.redirect('/');
+    });
+
+}
+
 exports.p_login = function(req, res) {
     res.render('auth/register');
 }

@@ -1,0 +1,38 @@
+extends ../layout
+
+block content
+    a(href="/") &raquo; Home
+    .form.create-post
+        form(action="/edit/#{row.pid}", method="POST", enctype="multipart/form-data")#create
+            .form-group
+                label(for="title") Title
+                input(type="text", name="title", placeholder="Title" value="#{row.title}").form-control#title
+            .form-group
+                label(for="thumbnail") Thumbnail 
+                    span.text-muted (Optional)
+                input(type="file", name="thumbnail", placeholder="Choose an image" accept="image/*" value="#{row.thumbnail}").form-control#thumbnail
+            .form-group
+                label(for="tags") Tags
+                input(type="text", name="tags", placeholder="Semicolon separate list" value="#{row.tags}").form-control#tags.no-space
+            .form-group
+                label(for="topic") Topic
+                select(name="topic" value="#{row.topic}").form-control#topic.no-space
+                    option(value="default") Default
+                    option(value="azure") Azure
+                    option(value="chrome") Chrome
+                    option(value="dotnet") .NET
+            .form-group
+                label(for="preview") Body Preview
+                input(type="text", name="preview", placeholder="Plain text here." maxlength="140" value="#{row.body_preview}").form-control#preview
+            .form-group
+                label(for="markdown") Body Markdown
+                textarea(rows="25", name="markdown", placeholder="Full markdown here." ).form-control#markdown.
+                    #{row.body_markdown}
+            button(type="submit").btn.btn-default Submit
+    script.
+        $(".no-space").keypress(function(e) {
+            if(e.which == 32) {
+                return false;
+            }
+        });
+

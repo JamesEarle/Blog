@@ -4,7 +4,7 @@ block content
     include ../includes/header.jade
     .box
         a(href="/") &raquo; Home
-        a(href="") &raquo; Edit
+        a(href="/edit/#{row.pid}") &raquo; Edit
         a(href="/delete/#{row.pid}") &raquo; Delete
         p!= row.body_markdown
         //case row.topic

@@ -1,6 +1,7 @@
 ﻿extends ../layout
 
 block content
+    a(href="/") &raquo; Home
     .form.create-post
         form(action="/create", method="POST", enctype="multipart/form-data")#create
             .form-group

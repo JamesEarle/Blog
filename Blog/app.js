@@ -57,18 +57,33 @@ app.get('/', routes.index);
 app.get('/filter/:filter', routes.index_filter);
 app.get('/login', routes.g_login);
 app.get('/register', routes.g_register);
-app.get('/posts/', routes.index);
 
-// CRUD
-app.get('/create', routes.g_create);
-app.get('/posts/:pid', routes.posts);
-// app.get('/posts/edit/:pid', routes.edit);
-app.get('/delete/:pid', routes.delete);
+// Safety nets
+app.get('/posts/', routes.index);
+app.get('/posts', routes.index);
+app.get('/edit/', routes.index);
+app.get('/edit', routes.index);
+app.get('/delete/', routes.index);
+app.get('/delete', routes.index);
 
 // POST Routes
 app.post('/login', routes.p_login);
 app.post('/register', routes.p_register);
+
+// Create
+app.get('/create', routes.g_create);
 app.post('/create', routes.p_create);
+
+// Read
+app.get('/posts/:pid', routes.posts);
+
+// Update
+app.get('/edit/:pid', routes.g_edit);
+app.post('/edit/:pid', routes.p_edit);
+
+// Delete
+app.post('/delete/:pid', routes.delete);
+
 
 http.createServer(app).listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
