@@ -129,7 +129,9 @@ exports.p_create = function(req, res) {
 
     // Sanitize your inputs you monster
     for(var i=0;i<args.length;i++) {
-        args[i] = args[i].replace("'", "\\'");
+        // args[i] = args[i].replace("'", "\\'");
+        // Replace ALL instances, .replace() only does first
+        args[i]  = args[i].split("'").join("\\'");
     }
 
     // Append apostrophes to beginning and end because
