@@ -1,7 +1,7 @@
 ﻿/* GET */
 
-exports.index = function(req, res) {
-    req.connection.query("SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P", function(err, rows, fields) {
+exports.index = function (req, res) {
+    req.connection.query("SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P", function (err, rows, fields) {
         if (err) throw err;
 
         res.render('index', {
@@ -10,7 +10,7 @@ exports.index = function(req, res) {
     });
 };
 
-exports.index_filter = function(req, res) {
+exports.index_filter = function (req, res) {
     req.connection.query("SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic = \'" + req.params.filter + "\'", function (err, rows, fields) {
         if (err) throw err;
 
@@ -21,8 +21,8 @@ exports.index_filter = function(req, res) {
     });
 }
 
-exports.posts = function(req, res) {
-    req.connection.query("SELECT * FROM Posts P WHERE P.pid=" + req.params.pid, function(err, rows, fields) {
+exports.posts = function (req, res) {
+    req.connection.query("SELECT * FROM Posts P WHERE P.pid=" + req.params.pid, function (err, rows, fields) {
         if (err) throw err;
 
         if (rows.length == 0) { // Bad ID
@@ -36,25 +36,25 @@ exports.posts = function(req, res) {
     });
 }
 
-exports.g_login = function(req, res) {
+exports.g_login = function (req, res) {
     res.render('auth/login');
 }
 
-exports.g_register = function(req, res) {
+exports.g_register = function (req, res) {
     res.render('auth/register');
 }
 
-exports.g_create = function(req, res) {
+exports.g_create = function (req, res) {
     res.render('admin/create');
 }
 
-exports.g_edit = function(req, res) {
+exports.g_edit = function (req, res) {
     var query = "SELECT * FROM Posts P WHERE P.pid=" + req.params.pid;
 
-    req.connection.query(query, function(err, rows, fields) {
+    req.connection.query(query, function (err, rows, fields) {
         if (err) throw err;
-        
-        if(rows.length == 0) { // Bad ID, can't find post
+
+        if (rows.length == 0) { // Bad ID, can't find post
             res.render('errors/notfound');
         } else if (rows.length == 1) { // Post found
             res.render('admin/edit', { row: rows[0] });
@@ -65,7 +65,7 @@ exports.g_edit = function(req, res) {
 }
 
 /* POST */
-exports.p_edit = function(req, res) {
+exports.p_edit = function (req, res) {
     var query = "UPDATE Posts SET";
 
     // Leading spaces for formatting
@@ -80,39 +80,39 @@ exports.p_edit = function(req, res) {
     ];
 
     // Add each field with escaped apostrophes to the query
-    for(var i=0;i<args.length;i++) {
+    for (var i = 0; i < args.length; i++) {
         query += args[i];
     }
-    
+
     // Add WHERE clause
     query += " WHERE pid=" + req.params.pid;
 
     // Query
-    req.connection.query(query, function(err, rows, fields) {
+    req.connection.query(query, function (err, rows, fields) {
         if (err) throw err;
 
         res.redirect('/');
     });
 }
 
-exports.p_login = function(req, res) {
+exports.p_login = function (req, res) {
     res.render('auth/register');
 }
 
-exports.p_register = function(req, res) {
+exports.p_register = function (req, res) {
     res.render('auth/register');
 }
 
-exports.delete = function(req, res) {
+exports.delete = function (req, res) {
     var query = "DELETE FROM Posts WHERE pid=" + req.params.pid; //delete from ....
 
-    req.connection.query(query, function(err, rows, fields) {
+    req.connection.query(query, function (err, rows, fields) {
         if (err) throw err;
         res.redirect('/');
     });
 }
 
-exports.p_create = function(req, res) {
+exports.p_create = function (req, res) {
     var query = "INSERT INTO Posts (title, thumbnail, tags, topic, body_preview, body_markdown) VALUES (";
 
     var args = [
@@ -126,31 +126,31 @@ exports.p_create = function(req, res) {
 
     // Sanitize apostrophes
     // Replace ALL instances, .replace() only does first
-    for(var i=0;i<args.length;i++) {
-        args[i]  = args[i].split("'").join("\\'");
+    for (var i = 0; i < args.length; i++) {
+        args[i] = args[i].split("'").join("\\'");
     }
 
     // Append apostrophes to beginning and end because
     // args.join below doesn't do this
-    args[0] = "'" + args[0]; 
-    args[args.length-1] = args[args.length-1] + "'";
+    args[0] = "'" + args[0];
+    args[args.length - 1] = args[args.length - 1] + "'";
 
     query += args.join("\', \'") + ")";
 
     // Validate file and upload to server
-    if(req.files.thumbnail.name !== "") {
-        req.fs.readFile(req.files.thumbnail.path, function(err, data) {
+    if (req.files.thumbnail.name !== "") {
+        req.fs.readFile(req.files.thumbnail.path, function (err, data) {
             if (err) throw err;
             var newPath = __dirname + "/../public/uploads/" + req.files.thumbnail.name;
 
-            req.fs.writeFile(newPath, data, function(err) {
+            req.fs.writeFile(newPath, data, function (err) {
                 if (err) throw err;
                 console.log("just great");
             });
         });
-    } 
-    
-    req.connection.query(query, function(err, rows, fields) {
+    }
+
+    req.connection.query(query, function (err, rows, fields) {
         if (err) throw err;
         res.redirect('/');
     });

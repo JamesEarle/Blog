@@ -27,7 +27,7 @@ var app = express();
 app.use(express.bodyParser());
 
 // Make the DB and Markdown parser visible to the router
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     req.connection = connection;
     req.md = md;
     req.fs = fs;
@@ -85,6 +85,6 @@ app.post('/edit/:pid', routes.p_edit);
 app.post('/delete/:pid', routes.delete);
 
 
-http.createServer(app).listen(app.get('port'), function() {
+http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
