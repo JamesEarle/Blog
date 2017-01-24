@@ -3,29 +3,8 @@
 block content
     include ../includes/header.jade
     .box
-        a(href="/") &raquo; Home
-        a(href="/edit/#{row.pid}") &raquo; Edit
-        a(href="/delete/#{row.pid}") &raquo; Delete
+        a(href="/").p-r &raquo; Home
+        a(href="/edit/#{row.pid}").p-r &raquo; Edit
+        a(href="/delete/#{row.pid}").p-r &raquo; Delete
         p!= row.body_markdown
-        //case row.topic
-            when "azure"
-                p.tag.azure
-            when "chrome"
-                p.tag.chrome
-            when "dotnet"
-                p.tag.dotnet
-            default
-                p.tag.default
-    //
-        h1 Here is post info
-        ul
-            li= row.title
-            unless row.thumbnail == ""
-                li= row.thumbnail
-            li= row.tags
-            li= row.topic
-            li= row.body_preview
-            
-            //- Escape incoming HTML
-            li!= row.body_markdown
 

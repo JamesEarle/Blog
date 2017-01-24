@@ -29,17 +29,19 @@ ul {
 	list-style-type: none;
 }
 
-/*.title {
-	margin: 0 auto 0 auto;
-	text-align: center;
-}*/
-
 .tag {
 	height: 20px;
 	width: 15px;
 	float:left;
 	margin: 3px 8px 3px 3px;
 }
+
+.p-r {
+	padding-right: 4px;
+}
+
+/* This is a good green color for future */
+/* background-color: #68A12A; */
 
 /* Will create a series of eligible tags and color mappings */
 .azure {
@@ -52,7 +54,6 @@ ul {
 
 .dotnet {
 	background-color: #7a4d87;
-	/*background-color: #68A12A; */
 }
 
 .default {
@@ -64,12 +65,7 @@ ul {
 	height: 32px;
 }
 
-.filter {
-	/*padding: 20px;*/
-	text-decoration: none;
-	color: white;
-}
-
+.filter,
 .filter:hover {
 	text-decoration: none;
 	color: white;
@@ -150,8 +146,6 @@ ul.topics li span {
 	width: 100%;
 	padding: 0px;
 }
-
-
 
 p.preview {
 	font-size: 0.75em;
