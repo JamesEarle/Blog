@@ -25,12 +25,12 @@ exports.posts = function(req, res) {
     req.connection.query("SELECT * FROM Posts P WHERE P.pid=" + req.params.pid, function(err, rows, fields) {
         if (err) throw err;
 
-        if (rows.length == 0) {
+        if (rows.length == 0) { // Bad ID
             res.render('errors/notfound');
-        } else if (rows.length == 1) {
+        } else if (rows.length == 1) { // Found it
             rows[0].body_markdown = req.md.render(rows[0].body_markdown);
             res.render('posts/post', { row: rows[0] });
-        } else {
+        } else { // Creating a black hole
             res.render('errors/servererror');
         }
     });
@@ -53,12 +53,12 @@ exports.g_edit = function(req, res) {
 
     req.connection.query(query, function(err, rows, fields) {
         if (err) throw err;
-
-        if(rows.length == 0) {
+        
+        if(rows.length == 0) { // Bad ID, can't find post
             res.render('errors/notfound');
-        } else if (rows.length == 1) {
+        } else if (rows.length == 1) { // Post found
             res.render('admin/edit', { row: rows[0] });
-        } else {
+        } else { // You've broken spacetime
             res.render('errors/servererror');
         }
     });
@@ -69,32 +69,30 @@ exports.p_edit = function(req, res) {
     var query = "UPDATE Posts SET";
 
     // Leading spaces for formatting
+    // Find a better way to apply split().join() to these props... 
     var args = [
-        " title=\'" + req.body.title + "\',",
-        " thumbnail=\'" + req.files.thumbnail.name + "\',",
-        " tags=\'" + req.body.tags + "\',",
-        " topic=\'" + req.body.topic + "\',",
-        " body_preview=\'" + req.body.preview + "\',",
-        " body_markdown=\'" + req.body.markdown + "\'"
+        " title=\'" + req.body.title.split("'").join("\\'") + "\',",
+        " thumbnail=\'" + req.files.thumbnail.name.split("'").join("\\'") + "\',",
+        " tags=\'" + req.body.tags.split("'").join("\\'") + "\',",
+        " topic=\'" + req.body.topic.split("'").join("\\'") + "\',",
+        " body_preview=\'" + req.body.preview.split("'").join("\\'") + "\',",
+        " body_markdown=\'" + req.body.markdown.split("'").join("\\'") + "\'"
     ];
 
-    // Sanitize your inputs you monster
-    for(var i=0;i<args.length;i++) {
-        args[i] = args[i].replace("'", "\\'");
-    }
-
+    // Add each field with escaped apostrophes to the query
     for(var i=0;i<args.length;i++) {
         query += args[i];
     }
-
+    
+    // Add WHERE clause
     query += " WHERE pid=" + req.params.pid;
 
+    // Query
     req.connection.query(query, function(err, rows, fields) {
         if (err) throw err;
 
         res.redirect('/');
     });
-
 }
 
 exports.p_login = function(req, res) {
@@ -115,7 +113,6 @@ exports.delete = function(req, res) {
 }
 
 exports.p_create = function(req, res) {
-
     var query = "INSERT INTO Posts (title, thumbnail, tags, topic, body_preview, body_markdown) VALUES (";
 
     var args = [
@@ -127,10 +124,9 @@ exports.p_create = function(req, res) {
         req.body.markdown
     ];
 
-    // Sanitize your inputs you monster
+    // Sanitize apostrophes
+    // Replace ALL instances, .replace() only does first
     for(var i=0;i<args.length;i++) {
-        // args[i] = args[i].replace("'", "\\'");
-        // Replace ALL instances, .replace() only does first
         args[i]  = args[i].split("'").join("\\'");
     }
 
@@ -141,6 +137,7 @@ exports.p_create = function(req, res) {
 
     query += args.join("\', \'") + ")";
 
+    // Validate file and upload to server
     if(req.files.thumbnail.name !== "") {
         req.fs.readFile(req.files.thumbnail.path, function(err, data) {
             if (err) throw err;

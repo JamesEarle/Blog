@@ -5,14 +5,6 @@ block content
     .blogs.box
         h4.center-header
             ul.topics
-                //- Doesn't work right because classes and the actual HTML
-                //- content don't always match (dotnet -> .NET, azure -> Azure)
-                //- mixin filter(topic)
-                //-     li
-                //-         span(class="#{topic}")
-                //-             a(href="/#{topic}").filter #{topic}
-                //- +filter("azure")
-                //- +filter("azure")
                 li
                     a(href="/filter/azure").filter
                         span.azure Azure
