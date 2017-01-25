@@ -8,9 +8,9 @@ block content
                 label(for="title") Title
                 input(type="text", name="title", placeholder="Title" value="#{row.title}").form-control#title
             .form-group
-                label(for="thumbnail") Thumbnail 
+                label(for="thumbnail") Photos 
                     span.text-muted (Optional)
-                input(type="file", name="thumbnail", placeholder="Choose an image" accept="image/*" value="#{row.thumbnail}").form-control#thumbnail
+                input(type="file", name="photos", placeholder="Choose your photos" accept="image/*" value="#{row.photos}" multiple).form-control#thumbnail
             .form-group
                 label(for="tags") Tags
                 input(type="text", name="tags", placeholder="Semicolon separate list" value="#{row.tags}").form-control#tags.no-space
