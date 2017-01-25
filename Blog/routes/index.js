@@ -141,19 +141,13 @@ exports.p_create = function (req, res) {
     args[0] = "'" + args[0];
     args[args.length - 1] = args[args.length - 1] + "'";
 
-    // Do we need to store file paths in DB? They're saved on server regardless...
     query += args.join("\', \'") + ")";
 
-    //Validate file and upload to server
+    // Validate file and upload to server
     for (var i = 0; i < req.files.photos.length; i++) {
-        (function(i) {
-            req.fs.readFile(req.files.photos[i].path, function(err, data) {
-                if(err) throw err;
-
-                var test = req.files.photos[i];
-
-                console.log(test.name);
-                console.log(test.originalFileName);
+        (function (i) {
+            req.fs.readFile(req.files.photos[i].path, function (err, data) {
+                if (err) throw err;
 
                 var newPath = __dirname + "/../public/uploads/" + req.files.photos[i].name;
 
@@ -163,8 +157,6 @@ exports.p_create = function (req, res) {
             });
         })(i);
     }
-
-    // console.log(query);
 
     req.connection.query(query, function (err, rows, fields) {
         if (err) throw err;

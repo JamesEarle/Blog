@@ -3,8 +3,10 @@
 block content
     include ../includes/header.jade
     .box
-        a(href="/").p-r &raquo; Home
-        a(href="/edit/#{row.pid}").p-r &raquo; Edit
-        a(href="/delete/#{row.pid}").p-r &raquo; Delete
+        a(href="/").p-r.link &raquo; Home
+        a(href="/edit/#{row.pid}").p-r.link &raquo; Edit
+        form(action="/delete/#{row.pid}" method="post").inline
+            button(type="submit").link.inline.no-pad-left &raquo; Delete
+        //- a(href="/delete/#{row.pid}").p-r &raquo; Delete
         p!= row.body_markdown
 

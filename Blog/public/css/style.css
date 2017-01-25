@@ -155,3 +155,22 @@ p.preview {
 .box p img {
 	max-width: 100%;
 }
+
+.inline {
+	display: inline;
+}
+
+.link {
+	background: none;
+	border: 0px;
+	color: #337AB7;
+}
+
+.link:hover {
+	color: #337AB7;
+	text-decoration: underline;
+}
+
+.no-pad-left {
+	padding-left: 0px;
+}
