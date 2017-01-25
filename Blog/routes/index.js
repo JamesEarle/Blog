@@ -1,7 +1,9 @@
 ﻿/* GET */
 
 exports.index = function (req, res) {
-    req.connection.query("SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P", function (err, rows, fields) {
+    var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P ORDER BY P.date_created DESC";
+
+    req.connection.query(query, function (err, rows, fields) {
         if (err) throw err;
 
         res.render('index', {
@@ -11,7 +13,9 @@ exports.index = function (req, res) {
 };
 
 exports.index_filter = function (req, res) {
-    req.connection.query("SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic = \'" + req.params.filter + "\'", function (err, rows, fields) {
+    var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic = \'" + req.params.filter + "\' ORDER BY P.date_created DESC"
+
+    req.connection.query(query, function (err, rows, fields) {
         if (err) throw err;
 
         res.render('index', {
@@ -19,7 +23,7 @@ exports.index_filter = function (req, res) {
             length: rows.length
         });
     });
-}
+};
 
 exports.posts = function (req, res) {
     req.connection.query("SELECT * FROM Posts P WHERE P.pid=" + req.params.pid, function (err, rows, fields) {
@@ -66,31 +70,21 @@ exports.g_edit = function (req, res) {
 
 /* POST */
 exports.p_edit = function (req, res) {
-    var query = "UPDATE Posts SET";
+    var query = "UPDATE Posts SET title=?, tags=?, topic=?, body_preview=?, body_markdown=? WHERE pid=" + req.params.pid;
 
-    // Leading spaces for formatting
-    // Find a better way to apply split().join() to these props... 
+    // MySQL module takes care of sanitizing using ? in query string
     var args = [
-        " title=\'" + req.body.title.split("'").join("\\'") + "\',",
-        // " thumbnail=\'" + req.files.thumbnail.name.split("'").join("\\'") + "\',",
-        " tags=\'" + req.body.tags.split("'").join("\\'") + "\',",
-        " topic=\'" + req.body.topic.split("'").join("\\'") + "\',",
-        " body_preview=\'" + req.body.preview.split("'").join("\\'") + "\',",
-        " body_markdown=\'" + req.body.markdown.split("'").join("\\'") + "\'"
+        req.body.title,
+        req.body.tags,
+        req.body.topic,
+        req.body.preview,
+        req.body.markdown
     ];
 
-    // TODO: Add ability to edit Photos too
-
-    // Add each field with escaped apostrophes to the query
-    for (var i = 0; i < args.length; i++) {
-        query += args[i];
-    }
-
-    // Add WHERE clause
-    query += " WHERE pid=" + req.params.pid;
+    // TODO: Allow additional file uploads (similar to p_create)
 
     // Query
-    req.connection.query(query, function (err, rows, fields) {
+    req.connection.query(query, args, function (err, rows, fields) {
         if (err) throw err;
 
         res.redirect('/');
@@ -115,8 +109,9 @@ exports.delete = function (req, res) {
 }
 
 exports.p_create = function (req, res) {
-    var query = "INSERT INTO Posts (title, tags, topic, body_preview, body_markdown) VALUES (";
+    var query = "INSERT INTO Posts (title, tags, topic, body_preview, body_markdown) VALUES (?, ?, ?, ?, ?)";
 
+    // MySQL module takes care of sanitizing using ? in query string        
     var args = [
         req.body.title,
         req.body.tags,
@@ -125,27 +120,9 @@ exports.p_create = function (req, res) {
         req.body.markdown,
     ];
 
-    // Sanitize for apostrophes
-    // Replace ALL instances, .replace() only does first
-    for (var i = 0; i < args.length; i++) {
-        args[i] = args[i].split("'").join("\\'");
-    }
-
-    // Do the same for photos, which can (surprisingly) allow apostrophes
-    for (var i = 0; i < req.files.photos.length; i++) {
-        req.files.photos[i].name = req.files.photos[i].name.split("'").join("\\'");
-    }
-
-    // Append apostrophes to beginning and end because
-    // args.join below doesn't do this
-    args[0] = "'" + args[0];
-    args[args.length - 1] = args[args.length - 1] + "'";
-
-    query += args.join("\', \'") + ")";
-
     // Validate file and upload to server
     for (var i = 0; i < req.files.photos.length; i++) {
-        (function (i) {
+        (function (i) { // Love using IIFEs
             req.fs.readFile(req.files.photos[i].path, function (err, data) {
                 if (err) throw err;
 
@@ -158,7 +135,7 @@ exports.p_create = function (req, res) {
         })(i);
     }
 
-    req.connection.query(query, function (err, rows, fields) {
+    req.connection.query(query, args, function (err, rows, fields) {
         if (err) throw err;
         res.redirect('/');
     });

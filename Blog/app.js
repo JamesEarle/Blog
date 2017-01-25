@@ -82,8 +82,6 @@ app.get('/edit/:pid', routes.g_edit);
 app.post('/edit/:pid', routes.p_edit);
 
 // Delete
-// Violates the principle that GET should never modify the server...
-// make post work
 app.post('/delete/:pid', routes.delete);
 
 http.createServer(app).listen(app.get('port'), function () {
