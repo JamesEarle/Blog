@@ -70,6 +70,7 @@ exports.g_edit = function (req, res) {
 
 /* POST */
 exports.p_edit = function (req, res) {
+    // ? used to mark where an escaped variable will be inserted.
     var query = "UPDATE Posts SET title=?, tags=?, topic=?, body_preview=?, body_markdown=? WHERE pid=" + req.params.pid;
 
     // MySQL module takes care of sanitizing using ? in query string
@@ -81,35 +82,8 @@ exports.p_edit = function (req, res) {
         req.body.markdown
     ];
 
-    // TODO: Allow additional file uploads (similar to p_create)
-
-    // Validate file and upload to server
-    // 1 photo
-    if (typeof req.files.photos.length == "undefined" && req.files.photos.size != 0) {
-        req.fs.readFile(req.files.photos.path, function (err, data) {
-            if (err) throw err;
-
-            var newPath = __dirname + "/../public/uploads/" + req.files.photos.name;
-
-            req.fs.writeFile(newPath, data, function (err) {
-                if (err) throw err;
-            });
-        });
-    } else { // multiple photos
-        for (var i = 0; i < req.files.photos.length; i++) {
-            (function (i) { // Love using IIFEs
-                req.fs.readFile(req.files.photos[i].path, function (err, data) {
-                    if (err) throw err;
-
-                    var newPath = __dirname + "/../public/uploads/" + req.files.photos[i].name;
-
-                    req.fs.writeFile(newPath, data, function (err) {
-                        if (err) throw err;
-                    });
-                });
-            })(i);
-        }
-    }
+    // Check and upload files (if any exist)
+    validateAndUploadFiles(req.files.photos, req.fs);
 
     // Query
     req.connection.query(query, args, function (err, rows, fields) {
@@ -137,9 +111,9 @@ exports.delete = function (req, res) {
 }
 
 exports.p_create = function (req, res) {
+    // MySQL module takes care of sanitizing using ? in query string        
     var query = "INSERT INTO Posts (title, tags, topic, body_preview, body_markdown) VALUES (?, ?, ?, ?, ?)";
 
-    // MySQL module takes care of sanitizing using ? in query string        
     var args = [
         req.body.title,
         req.body.tags,
@@ -148,23 +122,37 @@ exports.p_create = function (req, res) {
         req.body.markdown,
     ];
 
-    // Validate file and upload to server
-    for (var i = 0; i < req.files.photos.length; i++) {
-        (function (i) { // Love using IIFEs
-            req.fs.readFile(req.files.photos[i].path, function (err, data) {
-                if (err) throw err;
-
-                var newPath = __dirname + "/../public/uploads/" + req.files.photos[i].name;
-
-                req.fs.writeFile(newPath, data, function (err) {
-                    if (err) throw err;
-                });
-            });
-        })(i);
-    }
+    // Check and upload files (if any exist)
+    validateAndUploadFiles(req.files.photos, req.fs);
 
     req.connection.query(query, args, function (err, rows, fields) {
         if (err) throw err;
         res.redirect('/');
+    });
+}
+
+function validateAndUploadFiles(files, fs) {
+    // one file
+    if (typeof files.length == "undefined" && files.size != 0) {
+        upload(files, fs);
+    } else { // multiple files
+        for (var i = 0; i < files.length; i++) {
+            (function (i) { // Love using IIFEs
+                upload(files[i], fs);
+            })(i);
+        }
+    }
+}
+
+// Upload a single file to /uploads
+function upload(file, fs) {
+    fs.readFile(file.path, function (err, data) {
+        if (err) throw err;
+
+        var newPath = __dirname + "/../public/uploads/" + file.name;
+
+        fs.writeFile(newPath, data, function (err) {
+            if (err) throw err;
+        });
     });
 }
