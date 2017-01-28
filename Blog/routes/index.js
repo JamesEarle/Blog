@@ -83,6 +83,34 @@ exports.p_edit = function (req, res) {
 
     // TODO: Allow additional file uploads (similar to p_create)
 
+    // Validate file and upload to server
+    // 1 photo
+    if (typeof req.files.photos.length == "undefined" && req.files.photos.size != 0) {
+        req.fs.readFile(req.files.photos.path, function (err, data) {
+            if (err) throw err;
+
+            var newPath = __dirname + "/../public/uploads/" + req.files.photos.name;
+
+            req.fs.writeFile(newPath, data, function (err) {
+                if (err) throw err;
+            });
+        });
+    } else { // multiple photos
+        for (var i = 0; i < req.files.photos.length; i++) {
+            (function (i) { // Love using IIFEs
+                req.fs.readFile(req.files.photos[i].path, function (err, data) {
+                    if (err) throw err;
+
+                    var newPath = __dirname + "/../public/uploads/" + req.files.photos[i].name;
+
+                    req.fs.writeFile(newPath, data, function (err) {
+                        if (err) throw err;
+                    });
+                });
+            })(i);
+        }
+    }
+
     // Query
     req.connection.query(query, args, function (err, rows, fields) {
         if (err) throw err;
