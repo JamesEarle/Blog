@@ -1,10 +1,18 @@
-﻿var express = require('express');
+﻿// var bcrypt = require("bcrypt-nodejs");
+var md = require('markdown-it')();
+var body = require('body-parser');
+var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
-var body = require('body-parser');
-var md = require('markdown-it')();
 var fs = require('fs');
+
+
+// var hash = bcrypt.hashSync("bacon");
+ 
+// bcrypt.compareSync("bacon", hash); // true
+// bcrypt.compareSync("veggies", hash); // false
+
 
 //console.log(md.render("# Here is a test! \n ~~strikethrough~~ and **bold**"));
 
@@ -26,7 +34,7 @@ var app = express();
 // Allow requests to parse request body info
 app.use(express.bodyParser());
 
-// Make the DB and Markdown parser visible to the router
+// Make necessary parameters visible to 
 app.use(function (req, res, next) {
     req.connection = connection;
     req.md = md;

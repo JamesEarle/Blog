@@ -1,21 +1,27 @@
 {
-    "name": "Blog",
-    "version": "0.0.0",
-    "description": "Blog",
-    "main": "app.js",
-    "author": {
-        "name": "James Earle",
-        "email": ""
-    },
-    "dependencies": {
-        "express": "3.4.4",
-        "jade": "*",
-        "markdown-it": "^8.0.0",
-        "mysql": "^2.11.1",
-        "body-parser": "1.15.2",
-        "stylus": "0.54.5"
-    },
-    "scripts": {
-        "start": "node app.js"
-    }
+  "name": "blog",
+  "version": "0.0.0",
+  "description": "Blog",
+  "main": "app.js",
+  "license": "MIT",
+  "repository": {
+      "url": "https://github.com/JamesEarle/Blog"
+  },
+  "author": {
+    "name": "James Earle",
+    "email": ""
+  },
+  "dependencies": {
+    "body-parser": "1.15.2",
+    "express": "3.4.4",
+    "jade": "*",
+    "markdown-it": "^8.0.0",
+    "mysql": "^2.11.1",
+    "stylus": "0.54.5",
+    "bcrypt-nodejs": "*",
+    "client-sessions": "*"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
 }
