@@ -17,10 +17,10 @@ block content
     script.
         // button is disabled until 'password' and 'confirm-password' match.
         $('#confirm, #password').on('input', function() {
-            if($('#password').val() == $('#confirm').val()) {
-                $('button').removeAttr('disabled', 'disabled');
+            if($('#password').val() == $('#confirm').val() && $('#password').val().length != 0) {
+                $('button').removeAttr('disabled', 'disabled').addClass('btn-success');
             } else {
-                $('button').attr('disabled', 'disabled');                
+                $('button').attr('disabled', 'disabled').removeClass('btn-success');                
             }
         });
         // No spaces in username

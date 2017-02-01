@@ -98,7 +98,6 @@ exports.p_login = function (req, res) {
 }
 
 exports.p_register = function (req, res) {
-    // res.render('auth/register');
     var query = "INSERT INTO Users (username, password, privilege) VALUES (?, ?, ?)";
 
     var args = [
