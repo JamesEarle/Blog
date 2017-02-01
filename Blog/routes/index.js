@@ -98,7 +98,25 @@ exports.p_login = function (req, res) {
 }
 
 exports.p_register = function (req, res) {
-    res.render('auth/register');
+    // res.render('auth/register');
+    var query = "INSERT INTO Users (username, password, privilege) VALUES (?, ?, ?)";
+
+    var args = [
+        req.body.username,
+        req.bcrypt.hashSync(req.body.password)
+    ];
+
+    // Is this narcissism?
+    var privilege = req.body.username == "jamesearle" ? "god" : "user";
+    args.push(privilege);
+
+    console.log(args[1].length);
+
+    // TODO: make registration also log you in
+    req.connection.query(query, args, function (err, rows, fields) {
+        if (err) throw err;
+        res.redirect('/');
+    });
 }
 
 exports.delete = function (req, res) {

@@ -9,10 +9,10 @@ block content
                 input(type="text", name="username", placeholder="Enter your username").form-control#username
             .form-group
                 label(for="password") Password
-                input(type="password", name="username", placeholder="Enter Password").form-control#password
+                input(type="password", name="password", placeholder="Enter Password").form-control#password
             .form-group
                 label(for="confirm-password") Confirm Password
-                input(type="password", name="confirm-password", placeholder="Confirm Password").form-control#confirm
+                input(type="password", placeholder="Confirm Password").form-control#confirm
             button(type="submit" disabled).btn.btn-default Submit
     script.
         // button is disabled until 'password' and 'confirm-password' match.
@@ -21,5 +21,11 @@ block content
                 $('button').removeAttr('disabled', 'disabled');
             } else {
                 $('button').attr('disabled', 'disabled');                
+            }
+        });
+        // No spaces in username
+        $("#username").keypress(function(e) {
+            if(e.which == 32) {
+                return false;
             }
         });
