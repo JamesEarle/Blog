@@ -1,4 +1,24 @@
 ﻿extends ../layout
 
 block content
-    h2 Register here
+    .form.login
+        form(action="/register", method="POST", enctype="multipart/form-data")
+            .form-group
+                label(for="username") Username 
+                input(type="text", name="username", placeholder="Enter your username").form-control#username
+            .form-group
+                label(for="password") Password
+                input(type="password", name="username", placeholder="Enter Password").form-control#password
+            .form-group
+                label(for="confirm-password") Confirm Password
+                input(type="password", name="confirm-password", placeholder="Confirm Password").form-control#confirm
+            button(type="submit" disabled).btn.btn-default Submit
+    script.
+        // button is disabled until 'password' and 'confirm-password' match.
+        $('#confirm, #password').on('input', function() {
+            if($('#password').val() == $('#confirm').val()) {
+                $('button').removeAttr('disabled', 'disabled');
+            } else {
+                $('button').attr('disabled', 'disabled');                
+            }
+        });

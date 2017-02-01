@@ -1,4 +1,5 @@
-﻿// var bcrypt = require("bcrypt-nodejs");
+﻿var sessions = require("client-sessions");
+var bcrypt = require("bcrypt-nodejs");
 var md = require('markdown-it')();
 var body = require('body-parser');
 var express = require('express');
@@ -12,9 +13,6 @@ var fs = require('fs');
  
 // bcrypt.compareSync("bacon", hash); // true
 // bcrypt.compareSync("veggies", hash); // false
-
-
-//console.log(md.render("# Here is a test! \n ~~strikethrough~~ and **bold**"));
 
 // MySQL DB connection and setup.
 var mysql = require("mysql");
@@ -37,6 +35,7 @@ app.use(express.bodyParser());
 // Make necessary parameters visible to 
 app.use(function (req, res, next) {
     req.connection = connection;
+    req.bcrypt = bcrypt;
     req.md = md;
     req.fs = fs;
     next();
