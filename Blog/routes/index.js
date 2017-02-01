@@ -94,7 +94,13 @@ exports.p_edit = function (req, res) {
 }
 
 exports.p_login = function (req, res) {
-    res.render('auth/register');
+    // res.render('auth/register');
+    var query = "SELECT U.username, U.passsword FROM Users U WHERE U.username=?";
+
+    req.connection.query(query, req.body.username, function (err, rows, fields) {
+        if (err) throw err;
+        res.redirect('/');
+    });
 }
 
 exports.p_register = function (req, res) {
@@ -148,6 +154,7 @@ exports.p_create = function (req, res) {
     });
 }
 
+// Handle case for one and multiple file uploads and validation
 function validateAndUploadFiles(files, fs) {
     // one file
     if (typeof files.length == "undefined" && files.size != 0) {

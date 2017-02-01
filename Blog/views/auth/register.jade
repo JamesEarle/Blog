@@ -6,18 +6,18 @@ block content
         form(action="/register", method="POST", enctype="multipart/form-data")
             .form-group
                 label(for="username") Username 
-                input(type="text", name="username", placeholder="Enter your username").form-control#username
+                input(type="text", name="username", placeholder="Enter your username" required).form-control#username
             .form-group
                 label(for="password") Password
-                input(type="password", name="password", placeholder="Enter Password").form-control#password
+                input(type="password", name="password", placeholder="Enter Password" required).form-control#password
             .form-group
                 label(for="confirm-password") Confirm Password
-                input(type="password", placeholder="Confirm Password").form-control#confirm
+                input(type="password", placeholder="Confirm Password" required).form-control#confirm
             button(type="submit" disabled).btn.btn-default Submit
     script.
         // button is disabled until 'password' and 'confirm-password' match.
-        $('#confirm, #password').on('input', function() {
-            if($('#password').val() == $('#confirm').val() && $('#password').val().length != 0) {
+        $('#username, #password, #confirm').on('input', function() {
+            if($('#password').val() == $('#confirm').val() && $('#password').val().length >= 8 && $('#username').val().length >= 8) {
                 $('button').removeAttr('disabled', 'disabled').addClass('btn-success');
             } else {
                 $('button').attr('disabled', 'disabled').removeClass('btn-success');                

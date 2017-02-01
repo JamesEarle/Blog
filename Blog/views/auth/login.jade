@@ -6,8 +6,23 @@ block content
         form(action="/login", method="POST", enctype="multipart/form-data")
             .form-group
                 label(for="username") Username 
-                input(type="text", name="username", placeholder="Enter your username").form-control#username
+                input(type="text", name="username", placeholder="Enter your username" required).form-control#username
             .form-group
                 label(for="password") Password
-                input(type="password", name="password", placeholder="Enter your password").form-control#password
+                input(type="password", name="password", placeholder="Enter your password" required).form-control#password
             button(type="submit").btn.btn-default Submit
+    script.
+        // button is disabled until 'password' and 'confirm-password' match.
+        $('#username, #password').on('input', function() {
+            if($('#username').val().length > 8 && $('#password').val().length > 8) {
+                $('button').removeAttr('disabled', 'disabled').addClass('btn-success');
+            } else {
+                $('button').attr('disabled', 'disabled').removeClass('btn-success');                
+            }
+        });
+        // No spaces in username
+        $("#username").keypress(function(e) {
+            if(e.which == 32) {
+                return false;
+            }
+        });
