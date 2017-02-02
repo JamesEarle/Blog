@@ -174,3 +174,9 @@ p.preview {
 .no-pad-left {
 	padding-left: 0px;
 }
+
+.error {
+	padding: 2px 5px;
+	border-radius: 5px;
+	background-color: lightpink;
+}

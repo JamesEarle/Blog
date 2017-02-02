@@ -5,6 +5,8 @@ block content
     .form.login
         form(action="/login", method="POST", enctype="multipart/form-data")
             .form-group
+                unless !error
+                    p.error #{error}          
                 label(for="username") Username 
                 input(type="text", name="username", placeholder="Enter your username" required).form-control#username
             .form-group
@@ -14,7 +16,7 @@ block content
     script.
         // button is disabled until 'password' and 'confirm-password' match.
         $('#username, #password').on('input', function() {
-            if($('#username').val().length > 8 && $('#password').val().length > 8) {
+            if($('#username').val().length >= 8 && $('#password').val().length >= 8) {
                 $('button').removeAttr('disabled', 'disabled').addClass('btn-success');
             } else {
                 $('button').attr('disabled', 'disabled').removeClass('btn-success');                

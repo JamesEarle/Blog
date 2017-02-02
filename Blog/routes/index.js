@@ -95,11 +95,29 @@ exports.p_edit = function (req, res) {
 
 exports.p_login = function (req, res) {
     // res.render('auth/register');
-    var query = "SELECT U.username, U.passsword FROM Users U WHERE U.username=?";
+    var query = "SELECT U.username, U.password FROM Users U WHERE U.username=?";
 
     req.connection.query(query, req.body.username, function (err, rows, fields) {
         if (err) throw err;
-        res.redirect('/');
+
+        if(rows.length == 0) {
+            // user not found
+            res.redirect('/register');
+        } else if (rows.length == 1) {
+            // found user, authenticate
+            if(req.bcrypt.compareSync(req.body.password, rows[0].password)) {
+                // successful login, setup session
+                res.redirect('/');                
+            } else {
+                // wrong password
+                res.render('auth/login', { error: "Incorrect password or username" });                
+            }
+        } else {
+            //breaking the universe
+            res.render('errors/servererror');                                        
+        }
+        // unreachable code?
+        res.render('errors/servererror');        
     });
 }
 
