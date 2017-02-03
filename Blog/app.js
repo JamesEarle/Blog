@@ -32,14 +32,23 @@ var app = express();
 // Allow requests to parse request body info
 app.use(express.bodyParser());
 
+app.use(sessions({
+  cookieName: 'test-session',
+  secret: 'random_string_goes_here',
+  duration: 5 * 60 * 1000, // 5 minutes
+  activeDuration: 5 * 60 * 1000, // 5 minutes
+}));
+
 // Make necessary parameters visible to 
 app.use(function (req, res, next) {
     req.connection = connection;
+    req.sessions = sessions;
     req.bcrypt = bcrypt;
     req.md = md;
     req.fs = fs;
     next();
 });
+
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -64,6 +73,7 @@ app.get('/', routes.index);
 app.get('/filter/:filter', routes.index_filter);
 app.get('/login', routes.g_login);
 app.get('/register', routes.g_register);
+app.get('/logout', routes.logout);
 
 // Safety nets
 app.get('/posts/', routes.index);
