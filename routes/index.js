@@ -13,7 +13,7 @@ exports.index = function (req, res) {
     //     });
     // });
     // TEMP
-    res.render('index');
+    res.render('index', { rows: [] });
 };
 
 exports.index_filter = function (req, res) {
