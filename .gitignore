@@ -1,5 +1,6 @@
 # Ignore the entire node_modules/ directory
 Blog/node_modules/
+/node_modules/
 
 # VS Code auto generated files and folders
 *.vscode
