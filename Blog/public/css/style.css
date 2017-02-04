@@ -154,6 +154,8 @@ p.preview {
 
 .box p img {
 	max-width: 100%;
+	margin: 15px 0;
+	border-radius: 15px;
 }
 
 .inline {
@@ -179,4 +181,11 @@ p.preview {
 	padding: 2px 5px;
 	border-radius: 5px;
 	background-color: lightpink;
+}
+
+.post-body {
+	/*background-color: #f7f7f7;*/
+	border-radius: 15px;
+	padding: 20px 50px 50px 50px;
+	margin-top: 30px;
 }
