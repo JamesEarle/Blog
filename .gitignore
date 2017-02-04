@@ -4,3 +4,6 @@ Blog/node_modules/
 
 # VS Code auto generated files and folders
 *.vscode
+
+# Ignore dat files
+*.dat
