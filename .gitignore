@@ -7,3 +7,6 @@ Blog/node_modules/
 
 # Ignore dat files
 *.dat
+
+# Ignore everything in the private directory (environment info)
+/private

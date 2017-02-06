@@ -5,21 +5,22 @@
   "main": "app.js",
   "license": "MIT",
   "repository": {
-      "url": "https://github.com/JamesEarle/Blog"
+    "url": "https://github.com/JamesEarle/Blog"
   },
   "author": {
     "name": "James Earle",
     "email": ""
   },
   "dependencies": {
+    "bcrypt-nodejs": "*",
     "body-parser": "1.15.2",
+    "client-sessions": "*",
     "express": "3.4.4",
     "jade": "*",
     "markdown-it": "^8.0.0",
+    "mssql": "^3.3.0",
     "mysql": "^2.11.1",
-    "stylus": "0.54.5",
-    "bcrypt-nodejs": "*",
-    "client-sessions": "*"
+    "stylus": "0.54.5"
   },
   "scripts": {
     "start": "node app.js"
