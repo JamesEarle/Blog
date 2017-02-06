@@ -4,28 +4,35 @@ var md = require('markdown-it')();
 var body = require('body-parser');
 var express = require('express');
 var routes = require('./routes');
+var env = require('./private');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
 
-
-// var hash = bcrypt.hashSync("bacon");
- 
-// bcrypt.compareSync("bacon", hash); // true
-// bcrypt.compareSync("veggies", hash); // false
-
 // MySQL DB connection and setup.
-// var mysql = require("mysql");
+var sql = require("mssql");
 
-// var connection = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "", //secret
-//     database: "blog",
-//     port: "3306"
-// });
+// Setup for Azure SQL Server
+var config = {
+    user: env.username,
+    password: env.password,
+    server: "jamesirl.database.windows.net",
+    database: "blog",
 
-// connection.connect();
+    // As per the npm docs, encrypt=true for Azure connections
+    options: {
+        encrypt: true
+    }
+};
+
+sql.connect(config, function (err) {
+    if (err) throw err;
+    new sql.Request().query('select * from Posts', function (err, recordset) {
+        if (err) throw err;
+
+        console.log(recordset);
+    });
+});
 
 var app = express();
 
@@ -34,10 +41,10 @@ app.use(express.bodyParser());
 
 // delete this
 app.use(sessions({
-  cookieName: 'test-session',
-  secret: 'random_string_goes_here',
-  duration: 5 * 60 * 1000, // 5 minutes
-  activeDuration: 5 * 60 * 1000, // 5 minutes
+    cookieName: 'test-session',
+    secret: 'random_string_goes_here',
+    duration: 5 * 60 * 1000, // 5 minutes
+    activeDuration: 5 * 60 * 1000, // 5 minutes
 }));
 
 // Make necessary parameters visible to 

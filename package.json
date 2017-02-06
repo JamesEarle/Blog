@@ -19,7 +19,6 @@
     "jade": "*",
     "markdown-it": "^8.0.0",
     "mssql": "^3.3.0",
-    "mysql": "^2.11.1",
     "stylus": "0.54.5"
   },
   "scripts": {
