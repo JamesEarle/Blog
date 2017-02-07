@@ -41,7 +41,7 @@ exports.posts = function (req, res) {
     request.input('pid', req.params.pid);
 
     // req.connection.query("SELECT * FROM Posts P WHERE P.pid=" + req.params.pid, function (err, rows, fields) {
-    request.query(query, function(err, recordset) {
+    request.query(query, function (err, recordset) {
         if (err) throw err;
 
         if (recordset.length == 0) { // Bad ID
@@ -78,21 +78,23 @@ exports.g_create = function (req, res) {
 }
 
 exports.g_edit = function (req, res) {
-
     // Check auth
     if (!req.sessions.user || req.sessions.privilege != 'god') {
         res.render('errors/notfound');
     }
 
-    var query = "SELECT * FROM Posts P WHERE P.pid=" + req.params.pid;
+    var query = "SELECT * FROM Posts P WHERE P.pid=@pid" + req.params.pid;
+    var request = new req.sql.Request();
 
-    req.connection.query(query, function (err, rows, fields) {
+    request.input('pid', req.params.pid);
+
+    request.query(query, function(err, recordset) {
         if (err) throw err;
 
-        if (rows.length == 0) { // Bad ID, can't find post
+        if (recordset.length == 0) { // Bad ID, can't find post
             res.render('errors/notfound');
-        } else if (rows.length == 1) { // Post found
-            res.render('admin/edit', { row: rows[0] });
+        } else if (recordset.length == 1) { // Post found
+            res.render('admin/edit', { row: recordset[0] });
         } else { // You've broken spacetime
             res.render('errors/servererror');
         }
@@ -101,30 +103,25 @@ exports.g_edit = function (req, res) {
 
 /* POST */
 exports.p_edit = function (req, res) {
-
     if (!req.sessions.user || req.sessions.privilege != 'god') {
         res.render('errors/notfound');
     }
 
-    // ? used to mark where an escaped variable will be inserted.
-    var query = "UPDATE Posts SET title=?, tags=?, topic=?, body_preview=?, body_markdown=? WHERE pid=" + req.params.pid;
+    var query = "UPDATE Posts SET title=@title, tags=@tags, topic=@topic, body_preview=@preview, body_markdown=@markdown WHERE pid=@pid";
+    var request = new req.sql.Request();
 
-    // MySQL module takes care of sanitizing using ? in query string
-    var args = [
-        req.body.title,
-        req.body.tags,
-        req.body.topic,
-        req.body.preview,
-        req.body.markdown
-    ];
+    // Register inputs to update
+    request.input('title', req.body.title);
+    request.input('tags', req.body.tags);
+    request.input('topic', req.body.topic);
+    request.input('preview', req.body.preview);
+    request.input('markdown', req.body.markdown);
 
     // Check and upload files (if any exist)
     validateAndUploadFiles(req.files.photos, req.fs);
 
-    // Query
-    req.connection.query(query, args, function (err, rows, fields) {
+    request.query(query, function(err, recordset) {
         if (err) throw err;
-
         res.redirect('/');
     });
 }
@@ -189,9 +186,12 @@ exports.delete = function (req, res) {
         res.render('errors/notfound');
     }
 
-    var query = "DELETE FROM Posts WHERE pid=" + req.params.pid; //delete from ....
+    var query = "DELETE FROM Posts P WHERE P.pid=@pid";
+    var request = new req.sql.Request();
 
-    req.connection.query(query, function (err, rows, fields) {
+    // Register inputs
+    request.input('pid', req.params.pid);
+    request.query(query, function (err, recordset) {
         if (err) throw err;
         res.redirect('/');
     });
