@@ -1,6 +1,6 @@
 ﻿.nav.box
     ul.navbar
-        unless !auth
+        if auth && god
             li
                 a(href="/create")
                     img(src="../img/icons/plus.png").icon

@@ -4,7 +4,7 @@ block content
     include ../includes/header.jade
     .box
         a(href="/").p-r.link &raquo; Home
-        unless !god
+        if auth && god
             a(href="/edit/#{row.pid}").p-r.link &raquo; Edit
             form(action="/delete/#{row.pid}" method="post").inline
                 button(type="submit").link.inline.no-pad-left &raquo; Delete

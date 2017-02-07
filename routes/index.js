@@ -2,14 +2,17 @@
 
 // TODO convert all routes to MS SQL
 
-// converted
+// Converted
 exports.index = function (req, res) {
     var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P ORDER BY P.date_created DESC";
 
     new req.sql.Request().query(query, function (err, recordset) {
         if (err) throw err;
-        res.render('index', { 
-            rows: recordset 
+
+        res.render('index', {
+            rows: recordset,
+            auth: typeof req.sessions.user !== 'undefined',
+            god: req.sessions.privilege === 'god'
         });
     });
 };
@@ -28,6 +31,7 @@ exports.index_filter = function (req, res) {
         });
     });
 };
+
 
 exports.posts = function (req, res) {
     req.connection.query("SELECT * FROM Posts P WHERE P.pid=" + req.params.pid, function (err, rows, fields) {
@@ -121,20 +125,24 @@ exports.p_edit = function (req, res) {
 }
 
 exports.p_login = function (req, res) {
-    var query = "SELECT * FROM Users U WHERE U.username=?";
+    var query = "SELECT * FROM Users U WHERE U.username=@username";
 
-    req.connection.query(query, req.body.username, function (err, rows, fields) {
+    var request = new req.sql.Request();
+
+    request.input('username', req.body.username);
+
+    request.query(query, function (err, recordset) {
         if (err) throw err;
 
-        if (rows.length == 0) {
+        if (recordset.length == 0) {
             // user not found
             res.redirect('/register');
-        } else if (rows.length == 1) {
+        } else if (recordset.length == 1) {
             // found user, authenticate
-            if (req.bcrypt.compareSync(req.body.password, rows[0].password)) {
+            if (req.bcrypt.compareSync(req.body.password, recordset[0].password)) {
                 // successful login, setup session
                 req.sessions.user = req.body.username;
-                req.sessions.privilege = rows[0].privilege;
+                req.sessions.privilege = recordset[0].privilege;
                 res.redirect('/');
             } else {
                 // wrong password
@@ -155,7 +163,7 @@ exports.logout = function (req, res) {
     res.redirect('/');
 }
 
-// converted
+// Converted to mssql
 exports.p_register = function (req, res) {
     var query = "INSERT INTO Users (username, password, privilege) VALUES (@username, @password, @privilege)";
 
@@ -166,7 +174,7 @@ exports.p_register = function (req, res) {
     request.input('password', req.bcrypt.hashSync(req.body.password));
     request.input('privilege', privilege);
 
-    request.query(query, function(err, recordset) {
+    request.query(query, function (err, recordset) {
         res.redirect('/');
     });
 }
@@ -185,26 +193,26 @@ exports.delete = function (req, res) {
 }
 
 exports.p_create = function (req, res) {
-    // TODO make this DRY?
     if (!req.sessions.user || req.sessions.privilege != 'god') {
         res.render('errors/notfound');
     }
 
-    // MySQL module takes care of sanitizing using ? in query string        
-    var query = "INSERT INTO Posts (title, tags, topic, body_preview, body_markdown) VALUES (?, ?, ?, ?, ?)";
+    // MSSQL module takes care of sanitizing using @param in query string        
+    var query = "INSERT INTO Posts (title, tags, topic, body_preview, body_markdown) VALUES (@title, @tags, @topic, @preview, @markdown)";
 
-    var args = [
-        req.body.title,
-        req.body.tags,
-        req.body.topic,
-        req.body.preview,
-        req.body.markdown,
-    ];
+    var request = new req.sql.Request();
+
+    // Register inputs, automatically sanitized by mssql
+    request.input('title', req.body.title);
+    request.input('tags', req.body.tags);
+    request.input('topic', req.body.topic);
+    request.input('preview', req.body.preview);
+    request.input('markdown', req.body.markdown);
 
     // Check and upload files (if any exist)
     validateAndUploadFiles(req.files.photos, req.fs);
 
-    req.connection.query(query, args, function (err, rows, fields) {
+    request.query(query, function (err, recordset) {
         if (err) throw err;
         res.redirect('/');
     });
