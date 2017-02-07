@@ -1,7 +1,5 @@
 ﻿/* GET */
 
-// TODO convert all routes to MS SQL
-
 // Converted
 exports.index = function (req, res) {
     var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P ORDER BY P.date_created DESC";
@@ -19,18 +17,14 @@ exports.index = function (req, res) {
 
 // This is likely to get overridden by the jQuery Isotope extension
 exports.index_filter = function (req, res) {
-    var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic=@topic ORDER BY P.date_created DESC"
-
-    //req.params.filter
+    var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic=@topic ORDER BY P.date_created DESC";
 
     var request = new req.sql.Request();
     request.input('topic', req.params.filter);
 
-
     request.query(query, function (err, recordset) {
         if (err) throw err;
 
-        // length irrelevant?
         res.render('index', {
             rows: recordset,
             auth: typeof req.sessions.user !== 'undefined',
@@ -39,15 +33,14 @@ exports.index_filter = function (req, res) {
     });
 };
 
-
-exports.posts = function (req, res) {
+// View specific post
+exports.post = function (req, res) {
     var query = "SELECT * FROM Posts P WHERE P.pid=@pid";
     var request = new req.sql.Request();
 
     // Register inputs, sanitization handled by mssql and @param syntax
     request.input('pid', req.params.pid);
 
-    // req.connection.query("SELECT * FROM Posts P WHERE P.pid=" + req.params.pid, function (err, rows, fields) {
     request.query(query, function (err, recordset) {
         if (err) throw err;
 

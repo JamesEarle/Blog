@@ -95,7 +95,7 @@ app.get('/create', routes.g_create);
 app.post('/create', routes.p_create);
 
 // Read
-app.get('/posts/:pid', routes.posts);
+app.get('/posts/:pid', routes.post);
 
 // Update
 app.get('/edit/:pid', routes.g_edit);
