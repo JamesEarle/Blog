@@ -1,7 +1,7 @@
 ﻿/* GET */
 
 exports.index = function (req, res) {
-    // var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P ORDER BY P.date_created DESC";
+    var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P ORDER BY P.date_created DESC";
 
     // // TODO: this needs to check god level not just if authenticated.
     // req.connection.query(query, function (err, rows, fields) {
@@ -13,9 +13,18 @@ exports.index = function (req, res) {
     //     });
     // });
     // TEMP
-    res.render('index', { rows: [] });
+
+    new req.sql.Request().query(query, function (err, recordset) {
+        if (err) throw err;
+        // console.log("hello");
+        // console.log(recordset);
+        res.render('index', { 
+            rows: recordset 
+        });
+    });
 };
 
+// This is likely to get overridden by the jQuery Isotope extension
 exports.index_filter = function (req, res) {
     var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic = \'" + req.params.filter + "\' ORDER BY P.date_created DESC"
 
@@ -41,7 +50,7 @@ exports.posts = function (req, res) {
 
             // Determine auth & privilege separate
             var god = typeof req.sessions.privilege !== 'undefined' && req.sessions.privilege == 'god' && typeof req.sessions.user !== 'undefined';
-            
+
             res.render('posts/post', {
                 row: rows[0],
                 auth: typeof req.sessions.user !== 'undefined',
@@ -157,20 +166,16 @@ exports.logout = function (req, res) {
 }
 
 exports.p_register = function (req, res) {
-    var query = "INSERT INTO Users (username, password, privilege) VALUES (?, ?, ?)";
+    var query = "INSERT INTO Users (username, password, privilege) VALUES (@username, @password, @privilege)";
 
-    var args = [
-        req.body.username,
-        req.bcrypt.hashSync(req.body.password)
-    ];
-
-    // Is this narcissism?
+    var request = new req.sql.Request();
     var privilege = req.body.username == "jamesearle" ? "god" : "user";
-    args.push(privilege);
 
-    // TODO: make registration also log you in
-    req.connection.query(query, args, function (err, rows, fields) {
-        if (err) throw err;
+    request.input('username', req.body.username);
+    request.input('password', req.bcrypt.hashSync(req.body.password));
+    request.input('privilege', privilege);
+
+    request.query(query, function(err, recordset) {
         res.redirect('/');
     });
 }

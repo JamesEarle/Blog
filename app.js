@@ -27,11 +27,11 @@ var config = {
 
 sql.connect(config, function (err) {
     if (err) throw err;
-    new sql.Request().query('select * from Posts', function (err, recordset) {
-        if (err) throw err;
+    // new sql.Request().query('select * from Posts', function (err, recordset) {
+    //     if (err) throw err;
 
-        console.log(recordset);
-    });
+    //     // console.log(recordset);
+    // });
 });
 
 var app = express();
@@ -52,6 +52,7 @@ app.use(function (req, res, next) {
     // req.connection = connection;
     req.sessions = sessions;
     req.bcrypt = bcrypt;
+    req.sql = sql;
     req.md = md;
     req.fs = fs;
     next();
