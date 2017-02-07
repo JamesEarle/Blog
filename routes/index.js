@@ -34,21 +34,26 @@ exports.index_filter = function (req, res) {
 
 
 exports.posts = function (req, res) {
-    req.connection.query("SELECT * FROM Posts P WHERE P.pid=" + req.params.pid, function (err, rows, fields) {
+    var query = "SELECT * FROM Posts P WHERE P.pid=@pid";
+    var request = new req.sql.Request();
+
+    // Register inputs, sanitization handled by mssql and @param syntax
+    request.input('pid', req.params.pid);
+
+    // req.connection.query("SELECT * FROM Posts P WHERE P.pid=" + req.params.pid, function (err, rows, fields) {
+    request.query(query, function(err, recordset) {
         if (err) throw err;
 
-        if (rows.length == 0) { // Bad ID
+        if (recordset.length == 0) { // Bad ID
             res.render('errors/notfound');
-        } else if (rows.length == 1) { // Found it
-            rows[0].body_markdown = req.md.render(rows[0].body_markdown);
+        } else if (recordset.length == 1) { // Found it
+            recordset[0].body_markdown = req.md.render(recordset[0].body_markdown);
 
-            // Determine auth & privilege separate
-            var god = typeof req.sessions.privilege !== 'undefined' && req.sessions.privilege == 'god' && typeof req.sessions.user !== 'undefined';
-
+            // Render post with auth / privilege level
             res.render('posts/post', {
-                row: rows[0],
+                row: recordset[0],
                 auth: typeof req.sessions.user !== 'undefined',
-                god: god
+                god: req.sessions.privilege == 'god'
             });
         } else { // Creating a black hole
             res.render('errors/servererror');
@@ -192,6 +197,7 @@ exports.delete = function (req, res) {
     });
 }
 
+// Converted
 exports.p_create = function (req, res) {
     if (!req.sessions.user || req.sessions.privilege != 'god') {
         res.render('errors/notfound');
