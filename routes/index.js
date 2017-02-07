@@ -1,23 +1,13 @@
 ﻿/* GET */
 
+// TODO convert all routes to MS SQL
+
+// converted
 exports.index = function (req, res) {
     var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P ORDER BY P.date_created DESC";
 
-    // // TODO: this needs to check god level not just if authenticated.
-    // req.connection.query(query, function (err, rows, fields) {
-    //     if (err) throw err;
-
-    //     res.render('index', {
-    //         rows: rows,
-    //         auth: typeof req.sessions.user !== 'undefined'
-    //     });
-    // });
-    // TEMP
-
     new req.sql.Request().query(query, function (err, recordset) {
         if (err) throw err;
-        // console.log("hello");
-        // console.log(recordset);
         res.render('index', { 
             rows: recordset 
         });
@@ -165,6 +155,7 @@ exports.logout = function (req, res) {
     res.redirect('/');
 }
 
+// converted
 exports.p_register = function (req, res) {
     var query = "INSERT INTO Users (username, password, privilege) VALUES (@username, @password, @privilege)";
 
