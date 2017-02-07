@@ -9,7 +9,6 @@ var http = require('http');
 var path = require('path');
 var fs = require('fs');
 
-// MySQL DB connection and setup.
 var sql = require("mssql");
 
 // Setup for Azure SQL Server
@@ -27,11 +26,6 @@ var config = {
 
 sql.connect(config, function (err) {
     if (err) throw err;
-    // new sql.Request().query('select * from Posts', function (err, recordset) {
-    //     if (err) throw err;
-
-    //     // console.log(recordset);
-    // });
 });
 
 var app = express();

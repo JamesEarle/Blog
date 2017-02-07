@@ -19,15 +19,22 @@ exports.index = function (req, res) {
 
 // This is likely to get overridden by the jQuery Isotope extension
 exports.index_filter = function (req, res) {
-    var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic = \'" + req.params.filter + "\' ORDER BY P.date_created DESC"
+    var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic=@topic ORDER BY P.date_created DESC"
 
-    req.connection.query(query, function (err, rows, fields) {
+    //req.params.filter
+
+    var request = new req.sql.Request();
+    request.input('topic', req.params.filter);
+
+
+    request.query(query, function (err, recordset) {
         if (err) throw err;
 
+        // length irrelevant?
         res.render('index', {
-            rows: rows,
-            length: rows.length,
-            auth: typeof req.sessions.user !== 'undefined'
+            rows: recordset,
+            auth: typeof req.sessions.user !== 'undefined',
+            god: req.sessions.privilege === 'god'
         });
     });
 };
@@ -77,18 +84,19 @@ exports.g_create = function (req, res) {
     }
 }
 
+// TODO find a way to make the default <select> value set right here
 exports.g_edit = function (req, res) {
     // Check auth
     if (!req.sessions.user || req.sessions.privilege != 'god') {
         res.render('errors/notfound');
     }
 
-    var query = "SELECT * FROM Posts P WHERE P.pid=@pid" + req.params.pid;
+    var query = "SELECT * FROM Posts P WHERE P.pid=@pid";
     var request = new req.sql.Request();
 
     request.input('pid', req.params.pid);
 
-    request.query(query, function(err, recordset) {
+    request.query(query, function (err, recordset) {
         if (err) throw err;
 
         if (recordset.length == 0) { // Bad ID, can't find post
@@ -111,6 +119,7 @@ exports.p_edit = function (req, res) {
     var request = new req.sql.Request();
 
     // Register inputs to update
+    request.input('pid', req.params.pid);
     request.input('title', req.body.title);
     request.input('tags', req.body.tags);
     request.input('topic', req.body.topic);
@@ -120,7 +129,7 @@ exports.p_edit = function (req, res) {
     // Check and upload files (if any exist)
     validateAndUploadFiles(req.files.photos, req.fs);
 
-    request.query(query, function(err, recordset) {
+    request.query(query, function (err, recordset) {
         if (err) throw err;
         res.redirect('/');
     });
@@ -186,7 +195,7 @@ exports.delete = function (req, res) {
         res.render('errors/notfound');
     }
 
-    var query = "DELETE FROM Posts P WHERE P.pid=@pid";
+    var query = "DELETE FROM Posts WHERE pid=@pid";
     var request = new req.sql.Request();
 
     // Register inputs
