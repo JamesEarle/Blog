@@ -2,18 +2,21 @@
 
 // Converted
 exports.index = function (req, res) {
-    var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P ORDER BY P.date_created DESC";
+    res.render('auth/login');
+}
+// exports.index = function (req, res) {
+//     var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P ORDER BY P.date_created DESC";
 
-    new req.sql.Request().query(query, function (err, recordset) {
-        if (err) throw err;
+//     new req.sql.Request().query(query, function (err, recordset) {
+//         if (err) throw err;
 
-        res.render('index', {
-            rows: recordset,
-            auth: typeof req.sessions.user !== 'undefined',
-            god: req.sessions.privilege === 'god'
-        });
-    });
-};
+//         res.render('index', {
+//             rows: recordset,
+//             auth: typeof req.sessions.user !== 'undefined',
+//             god: req.sessions.privilege === 'god'
+//         });
+//     });
+// };
 
 // This is likely to get overridden by the jQuery Isotope extension
 exports.index_filter = function (req, res) {
