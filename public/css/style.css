@@ -189,3 +189,50 @@ p.preview {
 	padding: 20px 50px 50px 50px;
 	margin-top: 30px;
 }
+
+/*Copying other site for consistency*/
+.header-image {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #7CB2A3; /* Light green */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.headline {
+    padding: 100px 0;
+}
+
+.headline h1 {
+    font-size: 130px;
+    background: #fff;
+    background: rgba(255,255,255,0.9);
+}
+
+.headline h2 {
+    font-size: 77px;
+    background: #fff;
+    background: rgba(255,255,255,0.9);
+}
+
+.headline h3 {
+    font-size: 43px;
+    background: #fff;
+    background: rgba(255, 255, 255, 0.9);
+    padding-bottom: 4px;
+}
+
+.header-round {
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    -o-border-radius: 25px;
+
+    /* IE8 */
+    behavior: url(../js/PIE.htc);
+    zoom:1;
+    position:relative;
+}
