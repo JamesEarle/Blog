@@ -1,25 +1,10 @@
 ﻿extends layout
 
 block content
-    include ./includes/header.jade
+    //- include ./includes/header.jade
     .blogs.box
         h4.center-header
-            ul.topics
-                li
-                    a(href="/filter/azure").filter
-                        span.azure Azure
-                li
-                    a(href="/filter/chrome").filter 
-                        span.chrome Chrome
-                li
-                    a(href="/filter/dotnet").filter 
-                        span.dotnet .NET
-                li
-                    a(href="/filter/default").filter 
-                        span.default Default
-                li
-                    a(href="/").filter 
-                        span.default No Filter
+            //- Enter a search bar here instead
         h3 Recent Posts
             ul
                 each r, i in rows
