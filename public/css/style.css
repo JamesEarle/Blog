@@ -55,6 +55,7 @@ ul {
 	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 15px;
 }
 
 .warning {
@@ -180,6 +181,11 @@ p.preview {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+}
+
+.little-headline {
+	padding-top:30px !important;
+	padding-bottom:35px !important;
 }
 
 .headline {
