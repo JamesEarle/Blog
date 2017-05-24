@@ -1,5 +1,5 @@
 /* This is a good green color for future */
-/* background-color: #68A12A; */
+ /*background-color: #68A12A; */
 
 /* Will create a series of eligible tags and color mappings */
 .azure {
@@ -10,10 +10,18 @@
 	background-color: #FF7474;
 }
 
+.default {
+	background-color: #666666;
+}
+
 .dotnet {
 	background-color: #7a4d87;
 }
 
-.default {
-	background-color: #666666;
+.nodejs {
+	background-color: #68A12A;
+}
+
+.javascript {
+	background-color: #F0DB4F;
 }
