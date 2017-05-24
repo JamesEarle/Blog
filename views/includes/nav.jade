@@ -2,6 +2,9 @@
     ul.navbar
         if auth && god
             li
+                a(href="/logout")
+                    img(src="../img/icons/logout.png").icon
+            li
                 a(href="/create")
                     img(src="../img/icons/plus.png").icon
         li
