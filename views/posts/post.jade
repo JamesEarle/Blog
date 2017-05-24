@@ -1,7 +1,6 @@
 ﻿extends ../layout
 
 block content
-    include ../includes/header.jade
     .box
         a(href="/").p-r.link &raquo; Home
         if auth && god
@@ -10,4 +9,13 @@ block content
                 button(type="submit").link.inline.no-pad-left &raquo; Delete
         .post-body
             p!= row.body_markdown
+    script.
+        // Use this to center photos in blog posts. Can't apply classes to generated HTML from markdown,
+        // and no parent selector exists, so this will have to do.
+        var img = $.grep($('p'), function(i) {
+            return i.childElementCount >= 1 && i.children[0].nodeName === "IMG";
+        });
 
+        for(var i=0; i<img.length;i++) {
+            img[i].style.textAlign = 'center';
+        }

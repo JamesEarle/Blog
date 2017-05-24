@@ -40,26 +40,6 @@ ul {
 	padding-right: 4px;
 }
 
-/* This is a good green color for future */
-/* background-color: #68A12A; */
-
-/* Will create a series of eligible tags and color mappings */
-.azure {
-	background-color: #0078D7;
-}
-
-.chrome {
-	background-color: #FF7474;
-}
-
-.dotnet {
-	background-color: #7a4d87;
-}
-
-.default {
-	background-color: #666666;
-}
-
 .icon {
 	width: 32px;
 	height: 32px;
@@ -75,6 +55,7 @@ ul {
 	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 17.5px;
 }
 
 .warning {
@@ -155,8 +136,12 @@ p.preview {
 .box p img {
 	max-width: 100%;
 	margin: 15px 0;
-	border-radius: 15px;
+	border-radius: 5px;
 }
+
+/*p img {
+	text-align: center;
+}*/
 
 .inline {
 	display: inline;
@@ -202,6 +187,11 @@ p.preview {
     -o-background-size: cover;
 }
 
+.little-headline {
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+}
+
 .headline {
     padding: 100px 0;
 }
@@ -226,6 +216,7 @@ p.preview {
 }
 
 .header-round {
+	margin-top: 10px;
     border-radius: 25px;
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
