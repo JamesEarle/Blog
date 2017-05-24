@@ -47,7 +47,10 @@ exports.post = function (req, res) {
         if (recordset.length == 0) { // Bad ID
             res.render('errors/notfound');
         } else if (recordset.length == 1) { // Found it
-            recordset[0].body_markdown = req.md.render(recordset[0].body_markdown);
+            var html = req.md.render(recordset[0].body_markdown);
+            
+            // Store converted md
+            recordset[0].body_markdown = html;
 
             // Render post with auth / privilege level
             res.render('posts/post', {

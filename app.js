@@ -10,6 +10,7 @@ var path = require('path');
 var fs = require('fs');
 
 var sql = require("mssql");
+var highlight = require('highlight').Highlight;
 
 // Setup for Azure SQL Server
 var config = {
@@ -44,6 +45,7 @@ app.use(sessions({
 // Make necessary parameters visible to 
 app.use(function (req, res, next) {
     // req.connection = connection;
+    req.highlight = highlight;
     req.sessions = sessions;
     req.bcrypt = bcrypt;
     req.sql = sql;

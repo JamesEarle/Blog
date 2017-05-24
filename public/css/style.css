@@ -29,6 +29,12 @@ ul {
 	list-style-type: none;
 }
 
+/*Override in case highlight.js doesn't detect language right. (e.g. Jade)*/
+pre {
+	background: #2B2B2B !important;
+	color: #BABABA !important
+}
+
 .tag {
 	height: 20px;
 	width: 15px;
@@ -138,10 +144,6 @@ p.preview {
 	margin: 15px 0;
 	border-radius: 5px;
 }
-
-/*p img {
-	text-align: center;
-}*/
 
 .inline {
 	display: inline;
