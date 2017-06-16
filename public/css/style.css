@@ -229,3 +229,8 @@ p.preview {
     zoom:1;
     position:relative;
 }
+
+/* Code snippets don't need the post tag highlighted color. */
+span.javascript {
+	background-color: #2b2b2b !important;
+}
