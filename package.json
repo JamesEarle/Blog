@@ -19,7 +19,7 @@
     "highlight": "^0.2.4",
     "jade": "*",
     "markdown-it": "^8.0.0",
-    "mssql": "^3.3.0",
+    "mssql": "4.0.4",
     "stylus": "0.54.5"
   },
   "scripts": {
