@@ -223,11 +223,6 @@ p.preview {
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
     -o-border-radius: 25px;
-
-    /* IE8 */
-    behavior: url(../js/PIE.htc);
-    zoom:1;
-    position:relative;
 }
 
 /* Code snippets don't need the post tag highlighted color. */
