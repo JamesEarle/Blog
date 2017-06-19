@@ -1,6 +1,7 @@
 ﻿extends layout
 
 block content
+    //- include ./includes/header.jade
     .blogs.box
         h4.center-header
             //- Enter a search bar here instead
@@ -15,7 +16,7 @@ block content
                             p.tag.chrome
                         when "dotnet"
                             p.tag.dotnet
-                        when "nodejs"
+                            when "nodejs"
                             p.tag.nodejs
                         when "javascript"
                             p.tag.javascript
@@ -25,4 +26,3 @@ block content
                         a(href="/posts/#{r.pid}")
                             span #{r.title}
                         p.preview #{r.body_preview}
-                            //- span #{r.tags}
