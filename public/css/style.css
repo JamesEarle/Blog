@@ -18,7 +18,8 @@ footer {
 }
 
 hr {
-	width: 90%;
+	/* width: 90%; */
+	margin: 0 0 15px 0 !important;
 }
 
 li {
@@ -61,7 +62,7 @@ pre {
 	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 17.5px;
+	/* margin-top: 17.5px; */
 }
 
 .warning {
@@ -89,12 +90,12 @@ pre {
 }
 
 .nav {
-	height: 50px;
+	height: 45px;
 	text-align: right;
 }
 
 .navbar {
-	margin-top:20px;
+	margin-top:0px;
 	list-style-type: none;
 	padding: 0;
 }
@@ -182,7 +183,7 @@ p.preview {
     display: block;
     width: 100%;
     text-align: center;
-    background-color: #7CB2A3; /* Light green */
+    /* background-color: #7CB2A3; Light green */
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -195,7 +196,7 @@ p.preview {
 }
 
 .headline {
-    padding: 100px 0;
+    padding: 15px;
 }
 
 .headline h1 {
@@ -223,6 +224,10 @@ p.preview {
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
     -o-border-radius: 25px;
+}
+
+img.logo {
+	width: 175px;
 }
 
 /* Code snippets don't need the post tag highlighted color. */
