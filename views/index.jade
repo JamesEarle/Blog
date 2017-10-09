@@ -26,3 +26,10 @@ block content
                         a(href="/posts/#{r.pid}")
                             span #{r.title}
                         p.preview #{r.body_preview}
+                            span(id="date-#{i}").text-muted.fill-right
+                    script.
+                        var date = "#{r.date_time}";
+                        date = date.split(" ");
+                        date = date[1] + " " + date[2] + " " + date[3];
+                        document.getElementById("date-#{i}").textContent = date;
+

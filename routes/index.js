@@ -2,10 +2,12 @@
 
 // Converted
 exports.index = function (req, res) {
-    var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P ORDER BY P.date_created DESC";
+    var query = "SELECT * FROM Posts P ORDER BY P.pid DESC";
 
     new req.sql.Request().query(query, function (err, recordset) {
         if (err) throw err;
+
+        let val = recordset;
 
         res.render('index', {
             rows: recordset,
@@ -17,7 +19,7 @@ exports.index = function (req, res) {
 
 // This is likely to get overridden by the jQuery Isotope extension
 exports.index_filter = function (req, res) {
-    var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic=@topic ORDER BY P.date_created DESC";
+    var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic=@topic ORDER BY P.pid DESC";
 
     var request = new req.sql.Request();
     request.input('topic', req.params.filter);
@@ -206,7 +208,7 @@ exports.p_create = function (req, res) {
     }
 
     // MSSQL module takes care of sanitizing using @param in query string        
-    var query = "INSERT INTO Posts (title, tags, topic, body_preview, body_markdown) VALUES (@title, @tags, @topic, @preview, @markdown)";
+    var query = "INSERT INTO Posts (title, tags, topic, body_preview, body_markdown, date_time) VALUES (@title, @tags, @topic, @preview, @markdown, @date)";
 
     var request = new req.sql.Request();
 
@@ -216,6 +218,7 @@ exports.p_create = function (req, res) {
     request.input('topic', req.body.topic);
     request.input('preview', req.body.preview);
     request.input('markdown', req.body.markdown);
+    request.input('date', (new Date().getMonth()+1) + "-" + new Date().getDate() + "-" + new Date().getFullYear())
 
     // Check and upload files (if any exist)
     validateAndUploadFiles(req.files.photos, req.fs);
