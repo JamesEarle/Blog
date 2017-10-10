@@ -1,4 +1,6 @@
-﻿/* GET */
+﻿"use strict";
+
+/* GET */
 
 // Converted
 exports.index = function (req, res) {
@@ -7,7 +9,7 @@ exports.index = function (req, res) {
     new req.sql.Request().query(query, function (err, recordset) {
         if (err) throw err;
 
-        let val = recordset;
+        var val = recordset;
 
         res.render('index', {
             rows: recordset,

@@ -1,4 +1,6 @@
-﻿var sessions = require("client-sessions");
+﻿"use strict";
+
+var sessions = require("client-sessions");
 var bcrypt = require("bcrypt-nodejs");
 var md = require('markdown-it')();
 var body = require('body-parser');
