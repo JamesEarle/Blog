@@ -7,7 +7,6 @@ html
     link(rel='stylesheet', href='/css/posts.css')
     link(rel='stylesheet', href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/darcula.min.css")
     script(src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js")
-    script(src="/js/jquery-1.10.2.min.js")
     include ./includes/app_insights.html
   body
     include ./includes/header.jade
@@ -18,6 +17,11 @@ html
             hr
             block content
     footer
-        script. 
-            var elem = "<span>&copy; " + new Date().getFullYear() + " James Earle";
-            $("footer").append(elem);
+script.
+    var text = "\u00A9 " + new Date().getFullYear() + " James Earle";
+    var elem = document.createElement("span");
+    
+    elem.textContent = text;
+
+    var tags = document.getElementsByTagName("footer");
+    tags[0].appendChild(elem);
