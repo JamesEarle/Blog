@@ -190,11 +190,6 @@ p.preview {
     -o-background-size: cover;
 }
 
-.little-headline {
-	padding-top: 5px !important;
-	padding-bottom: 5px !important;
-}
-
 .headline {
     padding: 15px;
 }
