@@ -13,15 +13,6 @@ var config = {
     }
 };
 
-exports.input = function (inputLabel, inputValue) {
-    var request = new sql.Request();
-    request.input(inputLabel, inputValue);
-}
-
-function input(request, inputLabel, inputValue) {
-
-}
-
 exports.query = function (query, callback, inputs) {
     sql.connect(config, function (err) {
         if (err) throw err;
@@ -32,8 +23,8 @@ exports.query = function (query, callback, inputs) {
             for (var input in inputs) {
                 var key = input;
                 var val = inputs[key];
-                request.input(key, val);
             }
+            request.input(key, val);
         }
 
         request.query(query, function (err, result) {
