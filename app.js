@@ -6,43 +6,16 @@ var md = require('markdown-it')();
 var body = require('body-parser');
 var express = require('express');
 var routes = require('./routes');
-var env = require('./private');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
 
-var sql = require("mssql");
 var highlight = require('highlight').Highlight;
-
-// Setup for Azure SQL Server
-var config = {
-    user: env.username,
-    password: env.password,
-    server: "jamesirl.database.windows.net",
-    database: "blog",
-
-    // As per the npm docs, encrypt=true for Azure connections
-    options: {
-        encrypt: true
-    }
-};
-
-sql.connect(config, function (err) {
-    if (err) throw err;
-});
 
 var app = express();
 
 // Allow requests to parse request body info
 app.use(express.bodyParser());
-
-// delete this
-app.use(sessions({
-    cookieName: 'test-session',
-    secret: 'random_string_goes_here',
-    duration: 5 * 60 * 1000, // 5 minutes
-    activeDuration: 5 * 60 * 1000, // 5 minutes
-}));
 
 // Make necessary parameters visible to 
 app.use(function (req, res, next) {
@@ -50,7 +23,6 @@ app.use(function (req, res, next) {
     req.highlight = highlight;
     req.sessions = sessions;
     req.bcrypt = bcrypt;
-    req.sql = sql;
     req.md = md;
     req.fs = fs;
     next();
@@ -77,9 +49,9 @@ if ('development' == app.get('env')) {
 
 // GET Routes
 app.get('/', routes.index);
-app.get('/filter/:filter', routes.index_filter);
+// app.get('/filter/:filter', routes.index_filter);
 app.get('/login', routes.g_login);
-app.get('/register', routes.g_register);
+// app.get('/register', routes.g_register);
 app.get('/logout', routes.logout);
 
 // Safety nets
@@ -92,7 +64,7 @@ app.get('/delete', routes.index);
 
 // POST Routes
 app.post('/login', routes.p_login);
-app.post('/register', routes.p_register);
+// app.post('/register', routes.p_register);
 
 // Create
 app.get('/create', routes.g_create);

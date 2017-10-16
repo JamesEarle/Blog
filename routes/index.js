@@ -1,16 +1,12 @@
 ﻿"use strict";
+var db = require('../db');
+var env = require('../private')
 
-/* GET */
-
-// Converted
+// GET /
 exports.index = function (req, res) {
     var query = "SELECT * FROM Posts P ORDER BY P.pid DESC";
 
-    new req.sql.Request().query(query, function (err, recordset) {
-        if (err) throw err;
-
-        var val = recordset;
-
+    db.query(query, function (recordset) {
         res.render('index', {
             rows: recordset,
             auth: typeof req.sessions.user !== 'undefined',
@@ -19,35 +15,29 @@ exports.index = function (req, res) {
     });
 };
 
-// This is likely to get overridden by the jQuery Isotope extension
-exports.index_filter = function (req, res) {
-    var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic=@topic ORDER BY P.pid DESC";
+// Haven't implemented this on the UI side yet.
+// exports.index_filter = function (req, res) {
+//     var query = "SELECT P.pid, P.title, P.tags, P.topic, P.body_preview FROM Posts P WHERE P.topic=@topic ORDER BY P.pid DESC";
 
-    var request = new req.sql.Request();
-    request.input('topic', req.params.filter);
+//     var request = new req.sql.Request();
+//     request.input('topic', req.params.filter);
 
-    request.query(query, function (err, recordset) {
-        if (err) throw err;
+//     request.query(query, function (err, recordset) {
+//         if (err) throw err;
 
-        res.render('index', {
-            rows: recordset,
-            auth: typeof req.sessions.user !== 'undefined',
-            god: req.sessions.privilege === 'god'
-        });
-    });
-};
+//         res.render('index', {
+//             rows: recordset,
+//             auth: typeof req.sessions.user !== 'undefined',
+//             god: req.sessions.privilege === 'god'
+//         });
+//     });
+// };
 
-// View specific post
+// GET /posts/5
 exports.post = function (req, res) {
     var query = "SELECT * FROM Posts P WHERE P.pid=@pid";
-    var request = new req.sql.Request();
 
-    // Register inputs, sanitization handled by mssql and @param syntax
-    request.input('pid', req.params.pid);
-
-    request.query(query, function (err, recordset) {
-        if (err) throw err;
-
+    db.query(query, function (recordset) {
         if (recordset.length == 0) { // Bad ID
             res.render('errors/notfound');
         } else if (recordset.length == 1) { // Found it
@@ -62,17 +52,20 @@ exports.post = function (req, res) {
         } else { // Creating a black hole
             res.render('errors/servererror');
         }
-    });
+    }, { 'pid': req.params.pid });
 }
 
+// GET /login
 exports.g_login = function (req, res) {
     res.render('auth/login');
 }
 
+// GET /register
 exports.g_register = function (req, res) {
     res.render('auth/register');
 }
 
+// GET /create
 exports.g_create = function (req, res) {
     if (req.sessions.user && req.sessions.privilege == "god") {
         res.render('admin/create');
@@ -81,6 +74,7 @@ exports.g_create = function (req, res) {
     }
 }
 
+// GET /edit/5
 // TODO find a way to make the default <select> value set right here
 exports.g_edit = function (req, res) {
     // Check auth
@@ -89,13 +83,8 @@ exports.g_edit = function (req, res) {
     }
 
     var query = "SELECT * FROM Posts P WHERE P.pid=@pid";
-    var request = new req.sql.Request();
 
-    request.input('pid', req.params.pid);
-
-    request.query(query, function (err, recordset) {
-        if (err) throw err;
-
+    db.query(query, function (recordset) {
         if (recordset.length == 0) { // Bad ID, can't find post
             res.render('errors/notfound');
         } else if (recordset.length == 1) { // Post found
@@ -103,45 +92,37 @@ exports.g_edit = function (req, res) {
         } else { // You've broken spacetime
             res.render('errors/servererror');
         }
-    });
+    }, { 'pid': req.params.pid });
 }
 
-/* POST */
+// POST /edit/5
 exports.p_edit = function (req, res) {
     if (!req.sessions.user || req.sessions.privilege != 'god') {
         res.render('errors/notfound');
     }
 
     var query = "UPDATE Posts SET title=@title, tags=@tags, topic=@topic, body_preview=@preview, body_markdown=@markdown WHERE pid=@pid";
-    var request = new req.sql.Request();
 
-    // Register inputs to update
-    request.input('pid', req.params.pid);
-    request.input('title', req.body.title);
-    request.input('tags', req.body.tags);
-    request.input('topic', req.body.topic);
-    request.input('preview', req.body.preview);
-    request.input('markdown', req.body.markdown);
-
-    // Check and upload files (if any exist)
-    validateAndUploadFiles(req.files.photos, req.fs);
-
-    request.query(query, function (err, recordset) {
-        if (err) throw err;
+    db.query(query, function (recordset) {
         res.redirect('/');
-    });
+    },
+    {
+        'pid': req.params.pid,
+        'title': req.body.title,
+        'tags': req.body.tags,
+        'topic': req.body.topic,
+        'preview': req.body.preview,
+        'markdown': req.body.markdown,
+    })
+
+    validateAndUploadFiles(req.files.photos, req.fs);
 }
 
+// POST /login
 exports.p_login = function (req, res) {
     var query = "SELECT * FROM Users U WHERE U.username=@username";
 
-    var request = new req.sql.Request();
-
-    request.input('username', req.body.username);
-
-    request.query(query, function (err, recordset) {
-        if (err) throw err;
-
+    db.query(query, function (recordset) {
         if (recordset.length == 0) {
             // user not found
             res.redirect('/register');
@@ -162,9 +143,10 @@ exports.p_login = function (req, res) {
         }
         // unreachable code?
         res.render('errors/servererror');
-    });
+    }, { 'username': req.body.username });
 }
 
+// POST /logout
 exports.logout = function (req, res) {
     delete req.sessions.user;
     delete req.sessions.privilege;
@@ -172,38 +154,35 @@ exports.logout = function (req, res) {
 }
 
 // Converted to mssql
-exports.p_register = function (req, res) {
-    var query = "INSERT INTO Users (username, password, privilege) VALUES (@username, @password, @privilege)";
+// exports.p_register = function (req, res) {
+//     var query = "INSERT INTO Users (username, password, privilege) VALUES (@username, @password, @privilege)";
 
-    var request = new req.sql.Request();
-    var privilege = req.body.username == "jamesearle" ? "god" : "user";
+//     var request = new req.sql.Request();
+// var privilege = req.body.username == env.authName ? "god" : "user";
 
-    request.input('username', req.body.username);
-    request.input('password', req.bcrypt.hashSync(req.body.password));
-    request.input('privilege', privilege);
+//     request.input('username', req.body.username);
+//     request.input('password', req.bcrypt.hashSync(req.body.password));
+//     request.input('privilege', privilege);
 
-    request.query(query, function (err, recordset) {
-        res.redirect('/');
-    });
-}
+//     request.query(query, function (err, recordset) {
+//         res.redirect('/');
+//     });
+// }
 
+// POST /delete
 exports.delete = function (req, res) {
     if (!req.sessions.user || req.sessions.privilege != 'god') {
         res.render('errors/notfound');
     }
 
     var query = "DELETE FROM Posts WHERE pid=@pid";
-    var request = new req.sql.Request();
 
-    // Register inputs
-    request.input('pid', req.params.pid);
-    request.query(query, function (err, recordset) {
-        if (err) throw err;
+    db.query(query, function (recordset) {
         res.redirect('/');
-    });
+    }, { 'pid': req.params.pid });
 }
 
-// Converted
+// POST /create
 exports.p_create = function (req, res) {
     if (!req.sessions.user || req.sessions.privilege != 'god') {
         res.render('errors/notfound');
@@ -211,24 +190,21 @@ exports.p_create = function (req, res) {
 
     // MSSQL module takes care of sanitizing using @param in query string        
     var query = "INSERT INTO Posts (title, tags, topic, body_preview, body_markdown, date_time) VALUES (@title, @tags, @topic, @preview, @markdown, @date)";
+    var d = new Date();
 
-    var request = new req.sql.Request();
-
-    // Register inputs, automatically sanitized by mssql
-    request.input('title', req.body.title);
-    request.input('tags', req.body.tags);
-    request.input('topic', req.body.topic);
-    request.input('preview', req.body.preview);
-    request.input('markdown', req.body.markdown);
-    request.input('date', (new Date().getMonth()+1) + "-" + new Date().getDate() + "-" + new Date().getFullYear())
-
-    // Check and upload files (if any exist)
-    validateAndUploadFiles(req.files.photos, req.fs);
-
-    request.query(query, function (err, recordset) {
-        if (err) throw err;
-        res.redirect('/');
+    db.query(query, function(recordset) {
+        res.redirect('/');        
+    },
+    {
+        'title': req.body.title,
+        'tags': req.body.tags,
+        'topic': req.body.topic,
+        'preview': req.body.preview,
+        'markdown': req.body.markdown,
+        'date': (d.getMonth() + 1) + "-" + d.getDate() + "-" + d.getFullYear()
     });
+
+    validateAndUploadFiles(req.files.photos, req.fs);    
 }
 
 // Handle case for one and multiple file uploads and validation
