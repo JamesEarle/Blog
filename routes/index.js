@@ -35,7 +35,7 @@ exports.index = function (req, res) {
 
 // GET /posts/5
 exports.post = function (req, res) {
-    var query = "SELECT * FROM Posts P WHERE P.pid=@pid";
+    var query = "SELECT * FROM Posts P WHERE P.friendly_url = @url";
 
     db.query(query, function (recordset) {
         if (recordset.length == 0) { // Bad ID
@@ -52,7 +52,7 @@ exports.post = function (req, res) {
         } else { // Creating a black hole
             res.render('errors/servererror');
         }
-    }, { 'pid': req.params.pid });
+    }, { 'url': req.params.friendly_url });
 }
 
 // GET /login
@@ -189,7 +189,7 @@ exports.p_create = function (req, res) {
     }
 
     // MSSQL module takes care of sanitizing using @param in query string        
-    var query = "INSERT INTO Posts (title, tags, topic, body_preview, body_markdown, date_time) VALUES (@title, @tags, @topic, @preview, @markdown, @date)";
+    var query = "INSERT INTO Posts (title, tags, topic, friendly_url, body_preview, body_markdown, date_time) VALUES (@title, @tags, @topic, @url, @preview, @markdown, @date)";
     var d = new Date();
 
     db.query(query, function(recordset) {
@@ -199,6 +199,7 @@ exports.p_create = function (req, res) {
         'title': req.body.title,
         'tags': req.body.tags,
         'topic': req.body.topic,
+        'url': req.body.url,
         'preview': req.body.preview,
         'markdown': req.body.markdown,
         'date': (d.getMonth() + 1) + "-" + d.getDate() + "-" + d.getFullYear()

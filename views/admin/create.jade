@@ -24,6 +24,9 @@ block content
                     option(value="nodejs") Node.js
                     option(value="javascript") JavaScript
             .form-group
+                label(for="url") Friendly URL
+                input(type="text", name="url", placeholder="URL").form-control#url
+            .form-group
                 label(for="preview") Body Preview
                 input(type="text", name="preview", placeholder="Plain text here." maxlength="140").form-control#preview
             .form-group

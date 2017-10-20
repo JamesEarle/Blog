@@ -23,7 +23,7 @@ block content
                         default
                             p.tag.default
                     li
-                        a(href="/posts/#{r.pid}")
+                        a(href="/posts/#{r.friendly_url}")
                             span #{r.title}
                         p.preview #{r.body_preview}
                             span(id="date-#{i}").text-muted.fill-right
