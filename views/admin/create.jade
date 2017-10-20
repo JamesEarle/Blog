@@ -31,9 +31,10 @@ block content
                 textarea(rows="25", name="markdown", placeholder="Full markdown here.").form-control#markdown
             button(type="submit").btn.btn-default Submit
     script.
-        $(".no-space").keypress(function(e) {
-            if(e.which == 32) {
-                return false;
-            }
-        });
+        //- var x = document.getElementById('tags');
+        //- x.onKeyPress(function(e) {
+        //-     if(e.which == 32) {
+        //-         return false;
+        //-     }
+        //- });
 

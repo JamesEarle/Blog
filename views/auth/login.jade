@@ -15,16 +15,16 @@ block content
             button(type="submit").btn.btn-default Submit
     script.
         // button is disabled until 'password' and 'confirm-password' match.
-        $('#username, #password').on('input', function() {
-            if($('#username').val().length >= 8 && $('#password').val().length >= 8) {
-                $('button').removeAttr('disabled', 'disabled').addClass('btn-success');
-            } else {
-                $('button').attr('disabled', 'disabled').removeClass('btn-success');                
-            }
-        });
-        // No spaces in username
-        $("#username").keypress(function(e) {
-            if(e.which == 32) {
-                return false;
-            }
-        });
+        //- $('#username, #password').on('input', function() {
+        //-     if($('#username').val().length >= 8 && $('#password').val().length >= 8) {
+        //-         $('button').removeAttr('disabled', 'disabled').addClass('btn-success');
+        //-     } else {
+        //-         $('button').attr('disabled', 'disabled').removeClass('btn-success');                
+        //-     }
+        //- });
+        //- // No spaces in username
+        //- $("#username").keypress(function(e) {
+        //-     if(e.which == 32) {
+        //-         return false;
+        //-     }
+        //- });
