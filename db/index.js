@@ -23,8 +23,8 @@ exports.query = function (query, callback, inputs) {
             for (var input in inputs) {
                 var key = input;
                 var val = inputs[key];
+                request.input(key, val);
             }
-            request.input(key, val);
         }
 
         request.query(query, function (err, result) {
