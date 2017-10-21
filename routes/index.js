@@ -38,9 +38,19 @@ exports.post = function (req, res) {
     var query = "SELECT * FROM Posts P WHERE P.friendly_url = @url";
 
     db.query(query, function (recordset) {
-        if (recordset.length == 0) { // Bad ID
-            res.render('errors/notfound');
-        } else if (recordset.length == 1) { // Found it
+        if (recordset.length == 0) { // Bad URL or still using PID not friendly_url, check for pid
+            var query = "SELECT * FROM Posts P WHERE P.pid = @pid";
+
+            db.query(query, function(recordset) {
+                if (recordset.length == 0) {
+                    // Really not found
+                    res.render('errors/notfound');
+                } else {
+                    res.redirect('/posts/' + recordset[0].friendly_url); 
+                }
+            }, { 'pid': req.params.friendly_url });
+
+        } else { // Found it
             recordset[0].body_markdown = req.md.render(recordset[0].body_markdown);
 
             // Render post with auth / privilege level
@@ -49,8 +59,6 @@ exports.post = function (req, res) {
                 auth: typeof req.sessions.user !== 'undefined',
                 god: req.sessions.privilege == 'god'
             });
-        } else { // Creating a black hole
-            res.render('errors/servererror');
         }
     }, { 'url': req.params.friendly_url });
 }
