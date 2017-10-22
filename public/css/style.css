@@ -1,13 +1,7 @@
 body {
-  font: 14px "Consolas", Helvetica, Arial, sans-serif;
   background-color: #F5F5F5;
 }
 
-a {
-  color: #00b7ff;
-}
-
-/* position:absolute ruins the upload page */
 footer {
 	height: 50px;
 	width: 100%;
@@ -89,13 +83,32 @@ pre {
 	border-radius: 7.5px;
 }
 
+.nav-right {
+	text-align: right;
+	max-height: 45px;
+}
+
+.nav-left {
+	text-align: left;
+	max-height: 45px;
+	padding-top: 4px;
+}
+
+.nav-link, .nav-link:hover,
+.nav-link:focus {
+	font-size: 18px;
+	/* Color of JE Logo */
+	color: #374D5A; 
+	margin: 0 20px;
+	text-decoration: none;
+}
+
 .nav {
 	height: 45px;
-	text-align: right;
 }
 
 .navbar {
-	margin-top:0px;
+	margin: 0;
 	list-style-type: none;
 	padding: 0;
 }
@@ -122,12 +135,17 @@ pre {
 ul.navbar > li,
 ul.topics > li {
 	display: inline;
-	margin: 0 5px 0 5px;
+	margin: 0 5px;
 }
 
 ul.topics li span {
 	padding: 12px;
 	border-radius: 25px;
+}
+
+.divide {
+	font-size: 18px;
+	color: lightgray;
 }
 
 .topics {

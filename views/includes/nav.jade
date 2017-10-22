@@ -1,18 +1,32 @@
 ﻿.nav.box
-    ul.navbar
-        if auth && god
-            li
-                a(href="/logout")
-                    img(src="../img/icons/logout.png").icon
-            li
-                a(href="/create")
-                    img(src="../img/icons/plus.png").icon
-        li
-            a(href="https://github.com/JamesEarle" target="_blank")
-                img(src="../img/icons/github.png").icon
-        li
-            a(href="https://twitter.com/ItsJamesIRL" target="_blank")
-                img(src="../img/icons/twitter.png").icon
-        li
-            a(href="https://www.linkedin.com/in/itsjamesirl" target="_blank")
-                img(src="../img/icons/linkedin.png").icon
+    .row
+        .col-md-6.nav-left
+            ul.navbar
+                li
+                    a(href="about").nav-link About
+                li
+                    span.divide |
+                li
+                    a(href="experience").nav-link Experience
+                li
+                    span.divide |
+                li
+                    a(href="contact").nav-link Contact
+        .col-md-6.nav-right
+            ul.navbar
+                if auth && god
+                    li
+                        a(href="/logout")
+                            img(src="../img/icons/logout.png").icon
+                    li
+                        a(href="/create")
+                            img(src="../img/icons/plus.png").icon
+                li
+                    a(href="https://github.com/JamesEarle" target="_blank")
+                        img(src="../img/icons/github.png").icon
+                li
+                    a(href="https://twitter.com/ItsJamesIRL" target="_blank")
+                        img(src="../img/icons/twitter.png").icon
+                li
+                    a(href="https://www.linkedin.com/in/itsjamesirl" target="_blank")
+                        img(src="../img/icons/linkedin.png").icon
