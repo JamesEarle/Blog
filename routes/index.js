@@ -55,6 +55,7 @@ exports.post = function (req, res) {
 
             // Render post with auth / privilege level
             res.render('posts/post', {
+                title: recordset[0].title,
                 row: recordset[0],
                 auth: typeof req.sessions.user !== 'undefined',
                 god: req.sessions.privilege == 'god'
