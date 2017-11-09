@@ -1,7 +1,10 @@
 ﻿doctype html
 html
   head
-    title Blog Posts by James Earle
+    if title
+      title= title
+    else
+      title Blog Posts by James Earle
     link(rel='stylesheet', href='/css/style.css')
     link(rel='stylesheet', href='/css/bootstrap.css')
     link(rel='stylesheet', href='/css/posts.css')
