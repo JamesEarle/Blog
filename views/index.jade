@@ -1,13 +1,10 @@
 ﻿extends layout
 
 block content
-    //- include ./includes/header.jade
     .blogs.box
         h4.center-header
-        //- Enter a search bar here instead
         h3 Recent Posts
             ul
-                //- consider a two column table of blog posts too?
                 each r, i in rows
                     case r.topic
                         when "azure"

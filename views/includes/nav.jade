@@ -1,15 +1,19 @@
 ﻿.nav.box
     .row
         .col-md-6.nav-left
+            mixin pipe
+                li
+                    span.divide |
             ul.navbar
                 li
-                    a(href="about").nav-link About
+                    a(href="/").nav-link Home
+                +pipe
                 li
-                    span.divide |
+                    a(href="about").nav-link About
+                +pipe
                 li
                     a(href="experience").nav-link Experience
-                li
-                    span.divide |
+                +pipe
                 li
                     a(href="contact").nav-link Contact
         .col-md-6.nav-right

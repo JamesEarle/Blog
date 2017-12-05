@@ -217,6 +217,11 @@ exports.p_create = function (req, res) {
     validateAndUploadFiles(req.files.photos, req.fs);    
 }
 
+// Static pages
+exports.about = function(req, res) {
+    res.render('about');
+}
+
 // Handle case for one and multiple file uploads and validation
 function validateAndUploadFiles(files, fs) {
     // one file

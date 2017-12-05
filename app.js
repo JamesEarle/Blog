@@ -54,6 +54,9 @@ app.get('/login', routes.g_login);
 // app.get('/register', routes.g_register);
 app.get('/logout', routes.logout);
 
+// Static pages
+app.get('/about', routes.about);
+
 // Safety nets
 app.get('/posts/', routes.index);
 app.get('/posts', routes.index);

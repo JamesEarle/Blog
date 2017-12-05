@@ -91,7 +91,7 @@ pre {
 .nav-left {
 	text-align: left;
 	max-height: 45px;
-	padding-top: 4px;
+	padding-top: 3px;
 }
 
 .nav-link, .nav-link:hover,
@@ -252,4 +252,11 @@ span.javascript {
 	margin: auto;
 	float: right;
 	font-size: 0.75em;
+}
+
+#portrait {
+	width: 288px;
+	border-radius: 144px;
+	border: 1px solid black;
+	margin-top: 5%;
 }
