@@ -1,202 +1,206 @@
 body {
-  background-color: #F5F5F5;
+    background-color: #F5F5F5;
 }
 
 footer {
-	height: 50px;
-	width: 100%;
-	bottom: 0;
-	position: relative;
-	text-align: center;
-	margin: 15px auto 0 auto;
+    height: 50px;
+    width: 100%;
+    bottom: 0;
+    position: relative;
+    text-align: center;
+    margin: 15px auto 0 auto;
 }
 
 hr {
-	/* width: 90%; */
-	margin: 0 0 15px 0 !important;
+    /* width: 90%; */
+    margin: 0 0 15px 0 !important;
 }
 
 li {
-	margin: 15px 0;
+    margin: 15px 0;
 }
 
 ul {
-	list-style-type: none;
+    list-style-type: none;
 }
 
+
 /*Override in case highlight.js doesn't detect language right. (e.g. Jade)*/
+
 pre {
-	background: #2B2B2B !important;
-	color: #BABABA !important
+    background: #2B2B2B !important;
+    color: #BABABA !important
 }
 
 .tag {
-	height: 20px;
-	width: 15px;
-	float:left;
-	margin: 3px 8px 3px 3px;
+    height: 20px;
+    width: 15px;
+    float: left;
+    margin: 3px 8px 3px 3px;
 }
 
 .p-r {
-	padding-right: 4px;
+    padding-right: 4px;
 }
 
 .icon {
-	width: 32px;
-	height: 32px;
+    width: 32px;
+    height: 32px;
 }
 
 .filter,
 .filter:hover {
-	text-decoration: none;
-	color: white;
+    text-decoration: none;
+    color: white;
 }
 
 .box {
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
-	/* margin-top: 17.5px; */
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    /* margin-top: 17.5px; */
 }
 
 .warning {
-	width: 100%;
-	text-align:center;
+    width: 100%;
+    text-align: center;
 }
 
 .warning img {
-	margin: 0px 15px 15px 15px;
+    margin: 0px 15px 15px 15px;
 }
 
 .login {
-	width: 35%;
+    width: 35%;
 }
 
 .create-post {
-	width: 60%;
+    width: 60%;
 }
 
 .form {
-	margin: 35px auto 0 auto;
-	padding: 10px;
-	border: 1px solid rgba(0,0,0,0.1);
-	border-radius: 7.5px;
+    margin: 35px auto 0 auto;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 7.5px;
 }
 
 .nav-right {
-	text-align: right;
-	max-height: 45px;
+    text-align: right;
+    max-height: 45px;
 }
 
 .nav-left {
-	text-align: left;
-	max-height: 45px;
-	padding-top: 3px;
+    text-align: left;
+    max-height: 45px;
+    padding-top: 3px;
 }
 
-.nav-link, .nav-link:hover,
+.nav-link,
+.nav-link:hover,
 .nav-link:focus {
-	font-size: 18px;
-	/* Color of JE Logo */
-	color: #374D5A; 
-	margin: 0 20px;
-	text-decoration: none;
+    font-size: 18px;
+    /* Color of JE Logo */
+    color: #374D5A;
+    margin: 0 16.5px;
+    text-decoration: none;
 }
 
 .nav {
-	height: 45px;
+    height: 45px;
 }
 
 .navbar {
-	margin: 0;
-	list-style-type: none;
-	padding: 0;
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
 }
-
 
 .center-header {
-	width: 100%;
-	text-align: center;
+    width: 100%;
+    text-align: center;
 }
 
-.center-header > h4 {
-	margin-top: 7px;
+.center-header>h4 {
+    margin-top: 7px;
 }
 
-.center-header > h1 {
-	margin-bottom: 7px;
+.center-header>h1 {
+    margin-bottom: 7px;
 }
 
 .header-content {
-	text-align: center;
-	width: 80%;
+    text-align: center;
+    width: 80%;
 }
 
-ul.navbar > li,
-ul.topics > li {
-	display: inline;
-	margin: 0 5px;
+ul.navbar>li,
+ul.topics>li {
+    display: inline;
+    margin: 0 5px;
 }
 
 ul.topics li span {
-	padding: 12px;
-	border-radius: 25px;
+    padding: 12px;
+    border-radius: 25px;
 }
 
 .divide {
-	font-size: 18px;
-	color: lightgray;
+    font-size: 18px;
+    color: lightgray;
 }
 
 .topics {
-	width: 100%;
-	padding: 0px;
+    width: 100%;
+    padding: 0px;
 }
 
 p.preview {
-	font-size: 0.75em;
-	margin: 5px 0 0 50px;
+    font-size: 0.75em;
+    margin: 5px 0 0 50px;
 }
 
 .box p img {
-	max-width: 100%;
-	margin: 15px 0;
-	border-radius: 5px;
+    max-width: 100%;
+    margin: 15px 0;
+    border-radius: 5px;
 }
 
 .inline {
-	display: inline;
+    display: inline;
 }
 
 .link {
-	background: none;
-	border: 0px;
-	color: #337AB7;
+    background: none;
+    border: 0px;
+    color: #337AB7;
 }
 
 .link:hover {
-	color: #337AB7;
-	text-decoration: underline;
+    color: #337AB7;
+    text-decoration: underline;
 }
 
 .no-pad-left {
-	padding-left: 0px;
+    padding-left: 0px;
 }
 
 .error {
-	padding: 2px 5px;
-	border-radius: 5px;
-	background-color: lightpink;
+    padding: 2px 5px;
+    border-radius: 5px;
+    background-color: lightpink;
 }
 
 .post-body {
-	background-color: #f7f7f7;
-	border-radius: 15px;
-	padding: 20px 50px 50px 50px;
-	margin-top: 30px;
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    padding: 20px 50px 50px 50px;
+    margin-top: 30px;
 }
 
+
 /*Copying other site for consistency*/
+
 .header-image {
     display: block;
     width: 100%;
@@ -215,13 +219,13 @@ p.preview {
 .headline h1 {
     font-size: 130px;
     background: #fff;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255, 255, 255, 0.9);
 }
 
 .headline h2 {
     font-size: 77px;
     background: #fff;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255, 255, 255, 0.9);
 }
 
 .headline h3 {
@@ -232,7 +236,7 @@ p.preview {
 }
 
 .header-round {
-	margin-top: 10px;
+    margin-top: 10px;
     border-radius: 25px;
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
@@ -240,23 +244,29 @@ p.preview {
 }
 
 img.logo {
-	width: 175px;
+    width: 175px;
 }
 
+
 /* Code snippets don't need the post tag highlighted color. */
+
 span.javascript {
-	background-color: #2b2b2b !important;
+    background-color: #2b2b2b !important;
 }
 
 .fill-right {
-	margin: auto;
-	float: right;
-	font-size: 0.75em;
+    margin: auto;
+    float: right;
+    font-size: 0.75em;
 }
 
 #portrait {
-	width: 288px;
-	border-radius: 144px;
-	border: 1px solid black;
-	margin-top: 5%;
+    width: 288px;
+    border-radius: 144px;
+    border: 1px solid black;
+    margin-top: 5%;
+}
+
+#first-nav-link {
+    margin-left: -5px;
 }

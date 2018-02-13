@@ -18,7 +18,7 @@ var app = express();
 app.use(express.bodyParser());
 
 // Make necessary parameters visible to 
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     // req.connection = connection;
     req.highlight = highlight;
     req.sessions = sessions;
@@ -56,6 +56,9 @@ app.get('/logout', routes.logout);
 
 // Static pages
 app.get('/about', routes.about);
+app.get('/experience', routes.experience);
+app.get('/projects', routes.projects);
+app.get('/contact', routes.contact);
 
 // Safety nets
 app.get('/posts/', routes.index);
@@ -83,6 +86,6 @@ app.post('/edit/:pid', routes.p_edit);
 // Delete
 app.post('/delete/:pid', routes.delete);
 
-http.createServer(app).listen(app.get('port'), function () {
+http.createServer(app).listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
 });

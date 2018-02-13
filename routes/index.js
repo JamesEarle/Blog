@@ -3,10 +3,10 @@ var db = require('../db');
 var env = require('../private')
 
 // GET /
-exports.index = function (req, res) {
+exports.index = function(req, res) {
     var query = "SELECT * FROM Posts P ORDER BY P.pid DESC";
 
-    db.query(query, function (recordset) {
+    db.query(query, function(recordset) {
         res.render('index', {
             rows: recordset,
             auth: typeof req.sessions.user !== 'undefined',
@@ -34,10 +34,10 @@ exports.index = function (req, res) {
 // };
 
 // GET /posts/5
-exports.post = function (req, res) {
+exports.post = function(req, res) {
     var query = "SELECT * FROM Posts P WHERE P.friendly_url = @url";
 
-    db.query(query, function (recordset) {
+    db.query(query, function(recordset) {
         if (recordset.length == 0) { // Bad URL or still using PID not friendly_url, check for pid
             var query = "SELECT * FROM Posts P WHERE P.pid = @pid";
 
@@ -46,7 +46,7 @@ exports.post = function (req, res) {
                     // Really not found
                     res.render('errors/notfound');
                 } else {
-                    res.redirect('/posts/' + recordset[0].friendly_url); 
+                    res.redirect('/posts/' + recordset[0].friendly_url);
                 }
             }, { 'pid': req.params.friendly_url });
 
@@ -65,17 +65,17 @@ exports.post = function (req, res) {
 }
 
 // GET /login
-exports.g_login = function (req, res) {
+exports.g_login = function(req, res) {
     res.render('auth/login');
 }
 
 // GET /register
-exports.g_register = function (req, res) {
+exports.g_register = function(req, res) {
     res.render('auth/register');
 }
 
 // GET /create
-exports.g_create = function (req, res) {
+exports.g_create = function(req, res) {
     if (req.sessions.user && req.sessions.privilege == "god") {
         res.render('admin/create');
     } else {
@@ -85,7 +85,7 @@ exports.g_create = function (req, res) {
 
 // GET /edit/5
 // TODO find a way to make the default <select> value set right here
-exports.g_edit = function (req, res) {
+exports.g_edit = function(req, res) {
     // Check auth
     if (!req.sessions.user || req.sessions.privilege != 'god') {
         res.render('errors/notfound');
@@ -93,7 +93,7 @@ exports.g_edit = function (req, res) {
 
     var query = "SELECT * FROM Posts P WHERE P.pid=@pid";
 
-    db.query(query, function (recordset) {
+    db.query(query, function(recordset) {
         if (recordset.length == 0) { // Bad ID, can't find post
             res.render('errors/notfound');
         } else if (recordset.length == 1) { // Post found
@@ -105,17 +105,16 @@ exports.g_edit = function (req, res) {
 }
 
 // POST /edit/5
-exports.p_edit = function (req, res) {
+exports.p_edit = function(req, res) {
     if (!req.sessions.user || req.sessions.privilege != 'god') {
         res.render('errors/notfound');
     }
 
     var query = "UPDATE Posts SET title=@title, tags=@tags, topic=@topic, body_preview=@preview, body_markdown=@markdown WHERE pid=@pid";
 
-    db.query(query, function (recordset) {
+    db.query(query, function(recordset) {
         res.redirect('/');
-    },
-    {
+    }, {
         'pid': req.params.pid,
         'title': req.body.title,
         'tags': req.body.tags,
@@ -128,10 +127,10 @@ exports.p_edit = function (req, res) {
 }
 
 // POST /login
-exports.p_login = function (req, res) {
+exports.p_login = function(req, res) {
     var query = "SELECT * FROM Users U WHERE U.username=@username";
 
-    db.query(query, function (recordset) {
+    db.query(query, function(recordset) {
         if (recordset.length == 0) {
             // user not found
             res.redirect('/register');
@@ -156,7 +155,7 @@ exports.p_login = function (req, res) {
 }
 
 // POST /logout
-exports.logout = function (req, res) {
+exports.logout = function(req, res) {
     delete req.sessions.user;
     delete req.sessions.privilege;
     res.redirect('/');
@@ -179,20 +178,20 @@ exports.logout = function (req, res) {
 // }
 
 // POST /delete
-exports.delete = function (req, res) {
+exports.delete = function(req, res) {
     if (!req.sessions.user || req.sessions.privilege != 'god') {
         res.render('errors/notfound');
     }
 
     var query = "DELETE FROM Posts WHERE pid=@pid";
 
-    db.query(query, function (recordset) {
+    db.query(query, function(recordset) {
         res.redirect('/');
     }, { 'pid': req.params.pid });
 }
 
 // POST /create
-exports.p_create = function (req, res) {
+exports.p_create = function(req, res) {
     if (!req.sessions.user || req.sessions.privilege != 'god') {
         res.render('errors/notfound');
     }
@@ -202,9 +201,8 @@ exports.p_create = function (req, res) {
     var d = new Date();
 
     db.query(query, function(recordset) {
-        res.redirect('/');        
-    },
-    {
+        res.redirect('/');
+    }, {
         'title': req.body.title,
         'tags': req.body.tags,
         'topic': req.body.topic,
@@ -214,12 +212,24 @@ exports.p_create = function (req, res) {
         'date': (d.getMonth() + 1) + "-" + d.getDate() + "-" + d.getFullYear()
     });
 
-    validateAndUploadFiles(req.files.photos, req.fs);    
+    validateAndUploadFiles(req.files.photos, req.fs);
 }
 
 // Static pages
 exports.about = function(req, res) {
     res.render('about');
+}
+
+exports.experience = function(req, res) {
+    res.render('experience');
+}
+
+exports.projects = function(req, res) {
+    res.render('projects');
+}
+
+exports.contact = function(req, res) {
+    res.render('contact');
 }
 
 // Handle case for one and multiple file uploads and validation
@@ -229,7 +239,7 @@ function validateAndUploadFiles(files, fs) {
         upload(files, fs);
     } else { // multiple files
         for (var i = 0; i < files.length; i++) {
-            (function (i) { // Love using IIFEs
+            (function(i) { // Love using IIFEs
                 upload(files[i], fs);
             })(i);
         }
@@ -238,12 +248,12 @@ function validateAndUploadFiles(files, fs) {
 
 // Upload a single file to /uploads
 function upload(file, fs) {
-    fs.readFile(file.path, function (err, data) {
+    fs.readFile(file.path, function(err, data) {
         if (err) throw err;
 
         var newPath = __dirname + "/../public/uploads/" + file.name;
 
-        fs.writeFile(newPath, data, function (err) {
+        fs.writeFile(newPath, data, function(err) {
             if (err) throw err;
         });
     });
