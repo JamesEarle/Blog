@@ -5,20 +5,10 @@ block content
         h4.center-header
         h3 Recent Posts
             ul
+                mixin tag(tag)
+                    p(class="tag #{tag}")
                 each r, i in rows
-                    case r.topic
-                        when "azure"
-                            p.tag.azure
-                        when "chrome"
-                            p.tag.chrome
-                        when "dotnet"
-                            p.tag.dotnet
-                        when "nodejs"
-                            p.tag.nodejs
-                        when "javascript"
-                            p.tag.javascript
-                        default
-                            p.tag.default
+                    +tag(r.topic)
                     li
                         a(href="/posts/#{r.friendly_url}")
                             span #{r.title}
