@@ -85,13 +85,19 @@ pre {
     border-radius: 7.5px;
 }
 
-.nav-right {
+.right {
     text-align: right;
+}
+
+.left {
+    text-align: left
+}
+
+.nav-right {
     max-height: 45px;
 }
 
 .nav-left {
-    text-align: left;
     max-height: 45px;
     padding-top: 3px;
 }
@@ -191,11 +197,20 @@ p.preview {
     background-color: lightpink;
 }
 
-.post-body {
+.post-block,
+.text-block {
     background-color: #f7f7f7;
     border-radius: 15px;
+}
+
+.post-block {
     padding: 20px 50px 50px 50px;
     margin-top: 30px;
+}
+
+.text-block {
+    padding: 20px 50px;
+    margin: 30px auto;
 }
 
 
@@ -242,6 +257,10 @@ p.preview {
     -moz-border-radius: 25px;
     -o-border-radius: 25px;
 }
+
+/* .indent {
+
+} */
 
 img.logo {
     width: 175px;

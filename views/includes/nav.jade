@@ -1,6 +1,6 @@
 ﻿.nav.box
     .row
-        .col-md-6.nav-left
+        .col-md-6.nav-left.left
             mixin pipe
                 li
                     span.divide |
@@ -19,7 +19,7 @@
                 +pipe
                 li
                     a(href="contact").nav-link Contact
-        .col-md-6.nav-right
+        .col-md-6.nav-right.right
             ul.navbar
                 if auth && god
                     li
