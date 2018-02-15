@@ -1,6 +1,8 @@
 ﻿extends ../layout
 
 block content
+
+    a.twitter-share-button(href="https://twitter.com/share?ref_src=twsrc%5Etfw" data-show-count="false" data-via="ItsJamesIRL") Tweet
     .box
         a(href="/").p-r.link &raquo; Home
         if auth && god
@@ -18,3 +20,4 @@ block content
         }
 
         hljs.initHighlightingOnLoad();
+    

@@ -10,6 +10,7 @@ html
     link(rel='stylesheet', href='/css/posts.css')
     link(rel='stylesheet', href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/darcula.min.css")
     script(src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js")
+    script(async src="https://platform.twitter.com/widgets.js" charset="utf-8")
     include ./includes/app_insights.html
   body
     //- Add other nav, "About", "Work", etc.
@@ -22,6 +23,8 @@ html
           hr
           block content
     footer
+      a.twitter-share-button(href="https://twitter.com/share?ref_src=twsrc%5Etfw" data-show-count="false" data-via="ItsJamesIRL") Tweet
+      br
     script.
         var text = "\u00A9 " + new Date().getFullYear() + " James Earle";
         var elem = document.createElement("span");
