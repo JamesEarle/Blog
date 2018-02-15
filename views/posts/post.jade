@@ -1,8 +1,9 @@
 ﻿extends ../layout
 
 block content
+
+    a.twitter-share-button(href="https://twitter.com/share?ref_src=twsrc%5Etfw" data-show-count="false" data-via="ItsJamesIRL") Tweet
     .box
-        a.twitter-share-button(target="blank" href="https://twitter.com/intent/tweet?text=Hello%20World" data-size="small") Tweet
         a(href="/").p-r.link &raquo; Home
         if auth && god
             a(href="/edit/#{row.pid}").p-r.link &raquo; Edit
@@ -19,3 +20,4 @@ block content
         }
 
         hljs.initHighlightingOnLoad();
+    
