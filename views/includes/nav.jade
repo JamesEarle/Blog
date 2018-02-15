@@ -5,17 +5,14 @@
                 li
                     span.divide |
             ul.navbar
-                //- li
-                //-     a(href="/").nav-link#first-nav-link Home
-                //- +pipe
                 li
-                    a(href="/about").nav-link#first-nav-link About
+                    a(href="/").nav-link#first-nav-link Home
+                +pipe
+                li
+                    a(href="/about").nav-link About
                 +pipe
                 li
                     a(href="/experience").nav-link Experience
-                +pipe
-                li
-                    a(href="/projects").nav-link Projects
                 +pipe
                 li
                     a(href="/contact").nav-link Contact

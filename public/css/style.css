@@ -102,6 +102,14 @@ pre {
     padding-top: 3px;
 }
 
+.lead {
+    margin-bottom: 0px !important;
+}
+
+.right > h4 {
+    padding-top: 20px;
+}
+
 .nav-link,
 .nav-link:hover,
 .nav-link:focus {
@@ -133,6 +141,10 @@ pre {
 
 .center-header>h1 {
     margin-bottom: 7px;
+}
+
+container {
+    display:block;
 }
 
 .header-content {
@@ -209,8 +221,8 @@ p.preview {
 }
 
 .text-block {
-    padding: 20px 50px;
-    margin: 30px auto;
+    padding: 25px;
+    margin: auto;
 }
 
 
@@ -264,6 +276,12 @@ p.preview {
 
 img.logo {
     width: 175px;
+    height:175px;
+}
+
+p > img.logo {
+    /* border: 1px solid black; */
+    width: auto;
 }
 
 
@@ -277,6 +295,10 @@ span.javascript {
     margin: auto;
     float: right;
     font-size: 0.75em;
+}
+
+.title {
+    font-weight: bold;
 }
 
 #portrait {
