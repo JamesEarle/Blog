@@ -1,38 +1,50 @@
 extends layout
 
 block content
+    mixin titledate(title, company, startdate, enddate)
+        .row
+            .col-md-6.left
+                h2 #{title}
+            .col-md-6.right
+                h4 
+                    span.title #{company},
+                    span  #{startdate} - #{enddate}
+    mixin imgblock(imgpath)
+            span.col-md-3.left
+                img(src="#{imgpath}").exp-logo
     .box
         .row
-            .row
-                .col-md-6.left
-                    h2 Technical Evangelist
-                .col-md-6.right
-                    h4 
-                        span.title Microsoft
-                        span , July 2016 - Present
-            .text-block
-                p.col-md-3.left
-                  img(src="/img/ms-logo.png").logo
-                p.col-md-9.left
-                    .lead.
-                        Technical Evangelists are an interesting blend of engineering and community engagement. While I am an engineer, I don't work
-                        on a particular product at Microsoft. Instead, I spend my time building with new technology and sharing
-                        what I've built with enterprise developers and students alike. This gives me freedom to work on projects and tech I enjoy
-                        while simultaneously leading the community with regular public speaking events and engagements.
+            .row.text-block
+                +titledate('Technical Evangelist', 'Microsoft', 'July 2016', 'Present')
+                hr
+                +imgblock('/img/ms-logo.png')
+                p.lead.
+                    Technical Evangelists are an interesting blend of engineering and community engagement. While I am an engineer, I don't work
+                    on a particular product at Microsoft. Instead, I spend my time building with new technology and sharing
+                    what I've built with enterprise developers and students alike. This gives me freedom to work on projects and tech I enjoy
+                    while simultaneously leading the community with regular public speaking events and engagements.
         .row
-            h2 Microsoft Student Partner
-            .text-block
+            .row.text-block
+                +titledate('Microsoft Student Partner','Microsoft','July 2014','June 2016')
+                hr
+                +imgblock('/img/ms-logo.png')
                 p.lead.
                     There are many MSPs at universities all across Canada. The student partner program is meant to make Microsoft
                     technology more accessible for students, and my responsibilities require me to regularly host events
                     and technical demos.
         .row
-            h2 Junior Developer
-            p.lead.
-                Designed and restructured the company website, as well as developed internal company forms and the private customer portal using HTML, CSS, JavaScript, and PHP.
+            .row.text-block
+                +titledate('Junior Developer','Bluewire Computer Services Inc.','January 2016','April 2016')
+                hr
+                +imgblock('/img/bluewire-logo.png')
+                p.lead.
+                    Designed and restructured the company website, as well as developed internal company forms and the 
+                    private customer portal using HTML, CSS, JavaScript, and PHP.
         .row
-            h2 Full Stack Developer
-            .text-block
+            .row.text-block
+                +titledate('Full Stack Developer','Cross Border Housing Inc.','June 2015','April 2016')
+                hr
+                +imgblock('/img/cbh-logo.jpg')
                 p.lead.
                     Winner of multiple entrepreneurial competitions, such as Monster Pitch and the Niagara Startup Weekend, Cross Border Housing
                     is a startup from St. Catharines, ON, that is a platform for all international or non-local students,
@@ -40,6 +52,11 @@ block content
                     lifestyle. Beyond housing, a surplus of additional amenities are offered to give the user the smallest
                     amount of work possible in their travels.
         .row
-            h2 Teaching Assistant
-            p.lead.
-                Text
+            .row.text-block
+                +titledate('Teaching Assistant','Brock University','September 2014','April 2015')
+                hr
+                +imgblock('/img/brock-logo.jpg')
+                p.lead.
+                    Aided Professor D. Hughes (COSC 1P02 - Introduction to Computer Science), and Professor X. Bai 
+                    (ECON 2P21 - Intermediate Microeconomics) by guiding class content with instructed tutorials twice 
+                    weekly, as well as grading assignments, tests, and proctoring exams.
