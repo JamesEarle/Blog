@@ -218,7 +218,7 @@ p.preview {
 .post-block {
     padding: 20px 50px 50px 50px;
     margin-top: 30px;
-    border: 1px solid lightgray;
+    /* border: 1px solid lightgray; */
 }
 
 .text-block {
@@ -226,7 +226,7 @@ p.preview {
     padding-top: 0px;
     margin: auto;
     margin-bottom: 3%;
-    border: 1px solid lightgray;
+    /* border: 1px solid lightgray; */
 }
 
 
@@ -316,7 +316,7 @@ span.javascript {
 }
 
 #portrait {
-    width: 288px;
+    width: 280px;
     border-radius: 144px;
     border: 1px solid black;
     margin-top: 5%;
@@ -324,4 +324,8 @@ span.javascript {
 
 #first-nav-link {
     margin-left: -5px;
+}
+
+.col-md-12>.lead {
+    margin-top: 10px;
 }
