@@ -13,6 +13,3 @@ Blog/node_modules/
 
 # Don't pay attention to uploads we make in development environment
 /public/uploads
-
-# Don't upload markdown either. That's in DB uploaded properly this is drafting.
-/public/markdown
