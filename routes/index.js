@@ -6,6 +6,8 @@ var env = require('../private')
 exports.index = function (req, res) {
     var query = "SELECT * FROM Posts P ORDER BY P.pid DESC";
 
+    // Do something here 
+
     db.query(query, function (recordset) {
         res.render('index', {
             rows: recordset,

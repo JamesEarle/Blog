@@ -72,7 +72,7 @@ app.post('/create', routes.p_create);
 
 // Read
 app.get('/posts/:friendly_url', routes.post);
-
+// sample change
 // Update
 app.get('/edit/:pid', routes.g_edit);
 app.post('/edit/:pid', routes.p_edit);
